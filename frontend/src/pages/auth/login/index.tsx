@@ -21,26 +21,7 @@ export default observer(() => {
         />
       </div>
       <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
-        <div className="w-full">
-          <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">
-            Login
-          </h1>
-          <InputGroup
-            label={"Email"}
-            type={"email"}
-            placeholder={"john@doe.com"}
-            preIcon={<MailIcon />}
-          />
-          <br />
-          <InputGroup
-            label={"Password"}
-            type={"password"}
-            placeholder={"*******"}
-          />
-          <br />
-          <Button>Log In</Button>
-          <br />
-          <hr className="my-8" />
+        <div  className="w-full">
           <GoogleOAuthProvider clientId={import.meta.env.VITE_AUTH_GOOGLE_CLIENT_ID}>
             <GoogleLogin
               onSuccess={(credentialResponse) => loginWithGoogle(credentialResponse)}
@@ -50,6 +31,7 @@ export default observer(() => {
               useOneTap
             />
           </GoogleOAuthProvider>
+          <hr className="my-8" />
           <Button>
             <GitIcon className="w-4 h-4 mr-2" aria-hidden="true" />
             Github

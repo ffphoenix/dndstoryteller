@@ -12,8 +12,15 @@
 
 export interface User {
   email: string;
-  password: string;
-  firstName: string;
+  password?: string;
+  firstName?: string;
+  lastName?: string;
+  /** Google account ID (sub) */
+  googleId?: string;
+  pictureUrl?: string;
+  provider?: "local" | "google";
+  /** @format date-time */
+  lastLoginAt?: string;
 }
 
 export interface ErrorResponse {
@@ -21,6 +28,18 @@ export interface ErrorResponse {
   statusCode: number;
   /** error message */
   message: string;
+}
+
+export interface CredentialResponseDto {
+  /**
+   * Google ID token (JWT) returned by Google One Tap / OAuth
+   * @example "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+   */
+  credential: string;
+}
+
+export interface GoogleLoginDto {
+  credentialResponse: CredentialResponseDto;
 }
 
 import type {
@@ -199,11 +218,9 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title Cats example
+ * @title API Documentation
  * @version 1.0
  * @contact
- *
- * The cats API description
  */
 export class Api<
   SecurityDataType extends unknown,
@@ -213,10 +230,10 @@ export class Api<
      * No description
      *
      * @tags App
-     * @name AppControllerGetHello
+     * @name AppControllerGetTest
      * @request GET:/api
      */
-    appControllerGetHello: (params: RequestParams = {}) =>
+    appControllerGetTest: (params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api`,
         method: "GET",
@@ -241,15 +258,34 @@ export class Api<
     /**
      * No description
      *
+     * @tags Users
+     * @name UsersControllerGetTest
+     * @request GET:/api/users/test
+     */
+    usersControllerGetTest: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/users/test`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags auth
      * @name AuthControllerGoogleLogin
      * @summary Login with Google
      * @request POST:/api/auth/google/login
      */
-    authControllerGoogleLogin: (params: RequestParams = {}) =>
+    authControllerGoogleLogin: (
+      data: GoogleLoginDto,
+      params: RequestParams = {},
+    ) =>
       this.request<void, ErrorResponse>({
         path: `/api/auth/google/login`,
         method: "POST",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
   };
