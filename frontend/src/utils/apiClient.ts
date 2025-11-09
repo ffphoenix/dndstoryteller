@@ -1,14 +1,14 @@
 import { Api } from '../../generated/api';
+import type { AxiosRequestConfig } from 'axios';
 
-const bearerToken = localStorage.getItem("token");
-
-
-export default new Api({
-  baseUrl: 'http://localhost:3000/api',
+const apiClient = new Api({
+  secure: false,
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 5000, // 5 seconds
-  withCredentials: true, // Include cookies in cross-site requests
   headers: {
     'Content-Type': 'application/json',
-    (bearerToken) ?? 'Authorization': `Bearer ${bearerToken}`,
+    'Authorization': `Bearer ${localStorage.getItem("auth-token")}`,
   },
-});
+} as AxiosRequestConfig);
+
+export default apiClient

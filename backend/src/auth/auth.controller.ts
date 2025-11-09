@@ -1,8 +1,13 @@
 import { Controller, Post, Body, HttpStatus, HttpException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiProperty } from '@nestjs/swagger';
 import { ErrorResponse } from '../common/interfaces/errorResponse.interface';
 import { GoogleLoginDto } from './dto/google-login.dto';
+
+class GoogleAuthResponse {
+  @ApiProperty({description:'access_token'})
+  access_token: string;
+}
 
 @ApiTags('auth')
 @Controller('auth')
@@ -12,7 +17,7 @@ export class AuthController {
   @Post('google/login')
   @ApiOperation({ summary: 'Login with Google' })
   @ApiBody({ type: GoogleLoginDto })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Login successful' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Login successful', type: GoogleAuthResponse })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request', type: ErrorResponse })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized', type: ErrorResponse })
   async googleLogin(@Body() body: GoogleLoginDto) {

@@ -42,6 +42,11 @@ export interface GoogleLoginDto {
   credentialResponse: CredentialResponseDto;
 }
 
+export interface GoogleAuthResponse {
+  /** access_token */
+  access_token: string;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -259,13 +264,16 @@ export class Api<
      * No description
      *
      * @tags Users
-     * @name UsersControllerGetTest
-     * @request GET:/api/users/test
+     * @name UsersControllerGetCurrentUser
+     * @request GET:/api/users/me
+     * @secure
      */
-    usersControllerGetTest: (params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api/users/test`,
+    usersControllerGetCurrentUser: (params: RequestParams = {}) =>
+      this.request<User, ErrorResponse>({
+        path: `/api/users/me`,
         method: "GET",
+        secure: true,
+        format: "json",
         ...params,
       }),
 
@@ -281,11 +289,12 @@ export class Api<
       data: GoogleLoginDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, ErrorResponse>({
+      this.request<GoogleAuthResponse, ErrorResponse>({
         path: `/api/auth/google/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };

@@ -1,15 +1,12 @@
-import {useAPIPost} from "../../../utils/useAPI";
 import {autorun} from "mobx";
-import UI from "../../UI";
 import apiClient from '../../../utils/apiClient';
+import setCurrentUser from './setCurrentUser';
 
-export default (credentialResponse) => {
-    const state = useAPIPost('auth/google/login', {credentialResponse});
+export default async (credentialResponse) => {
+    const response = await apiClient.api.authControllerGoogleLogin({credentialResponse});
     autorun(() => {
-        if (!state.isLoading && !state.isError) {
-            console.log('Init user here');
-        }
-        UI.globalLoading = state.isLoading;
-    });
+      localStorage.setItem("auth-token", response.data.access_token);
 
+    });
+    await setCurrentUser();
 }

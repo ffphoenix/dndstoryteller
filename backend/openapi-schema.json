@@ -69,15 +69,47 @@
         ]
       }
     },
-    "/api/users/test": {
+    "/api/users/me": {
       "get": {
-        "operationId": "UsersController_getTest",
+        "operationId": "UsersController_getCurrentUser",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Returns current authenticated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
         "tags": [
           "Users"
         ]
@@ -99,7 +131,14 @@
         },
         "responses": {
           "200": {
-            "description": "Login successful"
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoogleAuthResponse"
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -221,6 +260,18 @@
         },
         "required": [
           "credentialResponse"
+        ]
+      },
+      "GoogleAuthResponse": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "access_token"
+          }
+        },
+        "required": [
+          "access_token"
         ]
       }
     }
