@@ -1,6 +1,6 @@
 import {autorun} from "mobx";
 import apiClient from '../../../utils/apiClient';
-import setCurrentUser from './setCurrentUser';
+import setCurrentUser from './getCurrentUser';
 
 export default async (credentialResponse) => {
     const response = await apiClient.api.authControllerGoogleLogin({credentialResponse});
