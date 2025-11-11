@@ -41,6 +41,7 @@ export class AuthService {
         pictureUrl: profile.picture || null,
         lastLoginAt: now,
         isActive: true,
+        role: 'user',
       });
     } else {
       // Update existing user with latest profile info

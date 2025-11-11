@@ -4,9 +4,6 @@ import setCurrentUser from './getCurrentUser';
 
 export default async (credentialResponse) => {
     const response = await apiClient.api.authControllerGoogleLogin({credentialResponse});
-    autorun(() => {
-      localStorage.setItem("auth-token", response.data.access_token);
-
-    });
+    localStorage.setItem("auth-token", response.data.access_token);
     await setCurrentUser();
 }

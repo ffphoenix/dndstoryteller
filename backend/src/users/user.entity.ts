@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 export type AuthProvider = 'local' | 'google';
+export type UserRole = 'admin' | 'user';
 
 @Entity()
 export class User {
@@ -28,6 +29,10 @@ export class User {
 
     @Column({ default: true })
     isActive: boolean;
+
+    @ApiProperty({ enum: ['admin', 'user'], default: 'user' })
+    @Column({ type: 'varchar', default: 'user' })
+    role: UserRole;
 
     // OAuth-specific fields
     @ApiProperty({ required: false, description: 'Google account ID (sub)' })

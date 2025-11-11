@@ -4,4 +4,5 @@ export default observable({
     id: null,
     email: null,
     pictureUrl: null,
+    role: null,
 })

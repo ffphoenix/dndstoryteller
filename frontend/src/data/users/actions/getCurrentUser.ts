@@ -7,6 +7,7 @@ export default async () => {
     action(user => {
       CurrentUser.id = user.data.id;
       CurrentUser.email = user.data.email;
+      CurrentUser.role = user.data.role;
       console.log('action', user);
     })
   )
