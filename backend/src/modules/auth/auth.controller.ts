@@ -1,7 +1,7 @@
 import { Controller, Post, Body, HttpStatus, HttpException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiProperty } from '@nestjs/swagger';
-import { ErrorResponse } from '../common/interfaces/errorResponse.interface';
+import { ErrorResponse } from '../../common/interfaces/errorResponse.interface';
 import { GoogleLoginDto } from './dto/google-login.dto';
 
 class GoogleAuthResponse {
