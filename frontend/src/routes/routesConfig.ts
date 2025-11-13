@@ -2,15 +2,16 @@ import Layout from "../layouts/Layout";
 import type {RouteObject} from "./roterCustomTypes";
 import loginRoute from "../pages/auth/login/loginRoute";
 import GuestLayout from "../layouts/GuestLayout";
-import {redirect} from "react-router-dom";
+import {redirect} from "react-router";
 import isUserLoggedIn from '../data/users/reducers/isUserLoggedIn';
-import getCurrentUser from '../data/users/actions/getCurrentUser';
+import getCurrentUser from '../data/users/actions/setCurrentUser';
+import isUserAuthorised from '../utils/auth/isUserAuthorised';
 
 const routes: RouteObject[] = [
     {
         path: '/',
         loader() {
-            if (!localStorage.getItem('auth-token')) {
+            if (!isUserAuthorised()) {
                 return redirect('/auth/login');
             }
             return null;
@@ -26,7 +27,7 @@ const routes: RouteObject[] = [
     {
         path: 'auth',
         loader() {
-          if (localStorage.getItem('auth-token')) {
+          if (isUserAuthorised()) {
             return redirect('/');
           }
           return null;

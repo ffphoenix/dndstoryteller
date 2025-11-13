@@ -1,9 +1,9 @@
-import {autorun} from "mobx";
 import apiClient from '../../../utils/apiClient';
-import setCurrentUser from './getCurrentUser';
+import setCurrentUser from './setCurrentUser';
+import { saveUserToken } from '../../../utils/auth/saveUserToken';
 
 export default async (credentialResponse) => {
     const response = await apiClient.api.authControllerGoogleLogin({credentialResponse});
-    localStorage.setItem("auth-token", response.data.access_token);
+    saveUserToken(response.data.access_token);
     await setCurrentUser();
 }

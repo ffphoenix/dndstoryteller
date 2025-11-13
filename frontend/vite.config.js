@@ -7,7 +7,12 @@ export default defineConfig({
     plugins: [
         react(),
         svgr({
-            include: "**/*.svg?react",
-        })
+            svgrOptions: {
+              icon: true,
+              // This will transform your SVG to a React component
+              exportType: "named",
+              namedExport: "ReactComponent",
+            },
+        }),
     ],
 })

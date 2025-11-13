@@ -1,10 +1,14 @@
 import * as React from 'react'
 import './App.css'
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router";
 import routesConfig from "./routes/routesConfig";
-import getCurrentUser from './data/users/actions/getCurrentUser';
+import { ThemeProvider } from './context/ThemeContext';
 
 export default () => {
     const router = createBrowserRouter(routesConfig);
-    return <RouterProvider router={router} />
+    return (
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    )
 }

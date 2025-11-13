@@ -1,21 +1,22 @@
 import React from 'react'
 
-import Sidebar from '../components/UI/Sidebar'
-import Header from '../components/UI/Header'
 import Main from './Main'
-import isUserLoggedIn from '../data/users/reducers/isUserLoggedIn';
-import CurrentUser from '../data/users/CurrentUser';
+import AppSidebar from './AppSidebar';
+import AppHeader from './AppHeader';
+import { SidebarProvider, useSidebar } from '../context/SidebarContext';
 
-export default () => {
-  console.log('Layout Layout', isUserLoggedIn(), CurrentUser.email)
+const LayoutContent: React.FC = () => {
+  const { isExpanded, isHovered, isMobileOpen } = useSidebar();
   return (
-    <div
-      className={`flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden`}
-    >
-      <Sidebar/>
+    <div className="min-h-screen xl:flex">
+      <AppSidebar/>
 
-      <div className="flex flex-col flex-1 w-full">
-        <Header/>
+      <div
+        className={`flex-1 transition-all duration-300 ease-in-out ${
+          isExpanded || isHovered ? "lg:ml-[290px]" : "lg:ml-[90px]"
+        } ${isMobileOpen ? "ml-0" : ""}`}
+      >
+        <AppHeader/>
         <Main>
           test
         </Main>
@@ -24,3 +25,12 @@ export default () => {
   )
 }
 
+const AppLayout: React.FC = () => {
+  return (
+    <SidebarProvider>
+      <LayoutContent />
+    </SidebarProvider>
+  );
+};
+
+export default AppLayout;

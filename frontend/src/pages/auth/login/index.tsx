@@ -1,10 +1,8 @@
 import React from 'react';
 import LoginImage from "../../../assets/img/login-bg.jpeg";
-import MailIcon from "../../../icons/mail.svg?react";
-import GitIcon from "../../../icons/github.svg?react";
-import InputGroup from "../../../components/UI/Form/InputGroup";
-import Button from "../../../components/UI/Form/Button";
-import Card from "../../../components/UI/Structural/Card";
+import { ReactComponent as GitIcon } from "../../../icons/github.svg?react";
+import Button from "../../../components/ui/form/Button";
+import Card from "../../../components/ui/structural/Card";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import {observer} from "mobx-react-lite";
 import loginWithGoogle from "../../../data/users/actions/loginWithGoogle";
