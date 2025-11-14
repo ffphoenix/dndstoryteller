@@ -3,9 +3,8 @@ import type {RouteObject} from "./roterCustomTypes";
 import loginRoute from "../pages/auth/login/loginRoute";
 import GuestLayout from "../layouts/GuestLayout";
 import {redirect} from "react-router";
-import isUserLoggedIn from '../data/users/reducers/isUserLoggedIn';
-import getCurrentUser from '../data/users/actions/setCurrentUser';
 import isUserAuthorised from '../utils/auth/isUserAuthorised';
+import Dashboard from "../pages/Dashboard";
 
 const routes: RouteObject[] = [
     {
@@ -20,7 +19,8 @@ const routes: RouteObject[] = [
         children: [
             {
                 path: '/',
-                visibleOnSidebar: true
+                visibleOnSidebar: true,
+                Component: Dashboard
             }
         ]
     } as RouteObject,

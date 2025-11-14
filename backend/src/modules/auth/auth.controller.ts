@@ -31,17 +31,16 @@ export class AuthController {
 
       // Validate the Google token
       const profile = await this.authService.validateGoogleToken(idToken);
-      console.log(profile);
       if (!profile) {
         throw new HttpException('Invalid Google token', HttpStatus.UNAUTHORIZED);
       }
 
       // Find or create the user
       const user = await this.authService.findOrCreateUser(profile);
-      console.log(user);
       // Generate JWT token
       return this.authService.generateToken(user);
     } catch (error) {
+      console.error('Error during Google login:', error);
       if (error instanceof HttpException) {
         throw error;
       }
