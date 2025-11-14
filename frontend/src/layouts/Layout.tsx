@@ -1,7 +1,7 @@
 import React from 'react'
 
 import AppSidebar from '../components/sidebar/AppSidebar';
-import AppHeader from './AppHeader';
+import Header from '../components/header/Header';
 import { SidebarProvider, useSidebar } from '../components/sidebar/context/SidebarContext';
 import { Outlet } from 'react-router';
 
@@ -18,7 +18,7 @@ const LayoutContent: React.FC = () => {
           isExpanded || isHovered ? "lg:ml-[290px]" : "lg:ml-[90px]"
         } ${isMobileOpen ? "ml-0" : ""}`}
       >
-        <AppHeader/>
+        <Header/>
         <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
           <Outlet />
         </div>

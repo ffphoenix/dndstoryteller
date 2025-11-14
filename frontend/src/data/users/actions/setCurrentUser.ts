@@ -8,7 +8,9 @@ export default async () => {
       CurrentUser.id = user.data.id;
       CurrentUser.email = user.data.email;
       CurrentUser.role = user.data.role;
-      console.log('action', user);
+      CurrentUser.pictureUrl = user.data.pictureUrl;
+      CurrentUser.firstName = user.data.firstName;
+      CurrentUser.lastName = user.data.lastName;
     })
   )
 
