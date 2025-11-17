@@ -6,49 +6,49 @@ export type UserRole = 'admin' | 'user';
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ApiProperty()
-    @Index({ unique: true })
-    @Column()
-    email: string;
+  @ApiProperty()
+  @Index({ unique: true })
+  @Column()
+  email: string;
 
-    // Nullable for OAuth users
-    @ApiProperty({ required: false })
-    @Column({ nullable: true })
-    password: string | null;
+  // Nullable for OAuth users
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  password: string | null;
 
-    @ApiProperty({ required: false })
-    @Column({ nullable: true })
-    firstName: string | null;
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  firstName: string | null;
 
-    @ApiProperty({ required: false })
-    @Column({ nullable: true })
-    lastName: string | null;
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  lastName: string | null;
 
-    @Column({ default: true })
-    isActive: boolean;
+  @Column({ default: true })
+  isActive: boolean;
 
-    @ApiProperty({ enum: ['admin', 'user'], default: 'user' })
-    @Column({ type: 'varchar', default: 'user' })
-    role: UserRole;
+  @ApiProperty({ enum: ['admin', 'user'], default: 'user' })
+  @Column({ type: 'varchar', default: 'user' })
+  role: UserRole;
 
-    // OAuth-specific fields
-    @ApiProperty({ required: false, description: 'Google account ID (sub)' })
-    @Index()
-    @Column({ type: 'varchar', nullable: true })
-    googleId: string | null;
+  // OAuth-specific fields
+  @ApiProperty({ required: false, description: 'Google account ID (sub)' })
+  @Index()
+  @Column({ type: 'varchar', nullable: true })
+  googleId: string | null;
 
-    @ApiProperty({ required: false })
-    @Column({ type: 'varchar', nullable: true })
-    pictureUrl: string | null;
+  @ApiProperty({ required: false })
+  @Column({ type: 'varchar', nullable: true })
+  pictureUrl: string | null;
 
-    @ApiProperty({ enum: ['local', 'google'], required: false })
-    @Column({ type: 'varchar', default: 'local' })
-    provider: AuthProvider;
+  @ApiProperty({ enum: ['local', 'google'], required: false })
+  @Column({ type: 'varchar', default: 'local' })
+  provider: AuthProvider;
 
-    @ApiProperty({ required: false })
-    @Column({ type: 'timestamp', nullable: true })
-    lastLoginAt: Date | null;
+  @ApiProperty({ required: false })
+  @Column({ type: 'timestamp', nullable: true })
+  lastLoginAt: Date | null;
 }

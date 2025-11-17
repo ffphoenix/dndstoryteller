@@ -4,6 +4,18 @@ import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { OAuth2Client } from 'google-auth-library';
+import getEnvVariable from '../../utils/getEnvVariable';
+
+type GoogleProfile = {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  picture?: string;
+  googleId?: string;
+  sub?: string;
+  given_name?: string;
+  family_name?: string;
+};
 
 @Injectable()
 export class AuthService {
@@ -17,7 +29,7 @@ export class AuthService {
     return this.usersService.findByEmail(email);
   }
 
-  async findOrCreateUser(profile: any): Promise<User> {
+  async findOrCreateUser(profile: GoogleProfile): Promise<User> {
     // Try find by googleId first if present, then by email
     let user: User | null = null;
     if (profile.googleId) {
@@ -59,17 +71,19 @@ export class AuthService {
   }
 
   generateToken(user: User): { access_token: string } {
-    const payload = { email: user.email, sub: user.id, provider: user.provider };
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      provider: user.provider,
+    };
     return {
       access_token: this.jwtService.sign(payload),
     };
   }
 
-  async validateGoogleToken(token: string): Promise<any> {
+  async validateGoogleToken(token: string): Promise<GoogleProfile> {
     try {
-      const client = new OAuth2Client(
-        this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'),
-      );
+      const client = new OAuth2Client(getEnvVariable('AUTH_GOOGLE_CLIENT_ID').toString());
       const ticket = await client.verifyIdToken({
         idToken: token,
         audience: this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'),

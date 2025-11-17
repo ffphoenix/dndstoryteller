@@ -5,7 +5,7 @@ import { ErrorResponse } from '../../common/interfaces/errorResponse.interface';
 import { GoogleLoginDto } from './dto/google-login.dto';
 
 class GoogleAuthResponse {
-  @ApiProperty({description:'access_token'})
+  @ApiProperty({ description: 'access_token' })
   access_token: string;
 }
 
