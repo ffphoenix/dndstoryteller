@@ -201,31 +201,15 @@ const AppSidebar: React.FC = () => {
         }`}
       >
         <Link to="/">
-          {isConditionToShow ? (
-            <>
-              <img
-                className="dark:hidden"
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <img
-                className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
-          ) : (
+          <>
             <img
-              src="/images/logo/logo-icon.svg"
+              className="block"
+              src="/images/logo/logo.svg"
               alt="Logo"
-              width={32}
-              height={32}
+              width={150}
+              height={40}
             />
-          )}
+          </>
         </Link>
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">

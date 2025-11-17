@@ -6,6 +6,7 @@ import Card from "../../../components/ui/structural/Card";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import {observer} from "mobx-react-lite";
 import loginWithGoogle from "../../../data/users/actions/loginWithGoogle";
+import { redirect } from 'react-router';
 
 export default observer(() => {
   return (
@@ -22,7 +23,10 @@ export default observer(() => {
         <div  className="w-full">
           <GoogleOAuthProvider clientId={import.meta.env.VITE_AUTH_GOOGLE_CLIENT_ID}>
             <GoogleLogin
-              onSuccess={(credentialResponse) => loginWithGoogle(credentialResponse)}
+              onSuccess={async (credentialResponse) => {
+                await loginWithGoogle(credentialResponse);
+                redirect('/');
+              }}
               onError={() => {
                 console.log("Login Failed");
               }}
