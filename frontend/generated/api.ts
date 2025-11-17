@@ -10,11 +10,47 @@
  * ---------------------------------------------------------------
  */
 
+export interface CreateUserDto {
+  /**
+   * User email address
+   * @example "user@example.com"
+   */
+  email: string;
+  /**
+   * User password
+   * @example "password123"
+   */
+  password?: string;
+  /**
+   * User first name
+   * @example "John"
+   */
+  firstName?: string;
+  /**
+   * User last name
+   * @example "Doe"
+   */
+  lastName?: string;
+  /** @default "user" */
+  role?: "admin" | "user";
+  /** @default "local" */
+  provider?: "local" | "google";
+  /** @example "https://example.com/avatar.jpg" */
+  pictureUrl?: string;
+  /**
+   * Google account ID
+   * @example "1234567890"
+   */
+  googleId?: string;
+}
+
 export interface User {
   email: string;
   password?: string;
   firstName?: string;
   lastName?: string;
+  /** @default "user" */
+  role: "admin" | "user";
   /** Google account ID (sub) */
   googleId?: string;
   pictureUrl?: string;
@@ -28,6 +64,40 @@ export interface ErrorResponse {
   statusCode: number;
   /** error message */
   message: string;
+}
+
+export interface UpdateUserDto {
+  /**
+   * User email address
+   * @example "user@example.com"
+   */
+  email?: string;
+  /**
+   * User password
+   * @example "password123"
+   */
+  password?: string;
+  /**
+   * User first name
+   * @example "John"
+   */
+  firstName?: string;
+  /**
+   * User last name
+   * @example "Doe"
+   */
+  lastName?: string;
+  /** @default "user" */
+  role?: "admin" | "user";
+  /** @default "local" */
+  provider?: "local" | "google";
+  /** @example "https://example.com/avatar.jpg" */
+  pictureUrl?: string;
+  /**
+   * Google account ID
+   * @example "1234567890"
+   */
+  googleId?: string;
 }
 
 export interface CredentialResponseDto {
@@ -230,29 +300,46 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<
   SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
-  api = {
+  /**
+   * No description
+   *
+   * @tags App
+   * @name GetTest
+   * @request GET:/api
+   */
+  getTest = (params: RequestParams = {}) =>
+    this.request<void, any>({
+      path: `/api`,
+      method: "GET",
+      ...params,
+    });
+
+  users = {
     /**
      * No description
      *
-     * @tags App
-     * @name AppControllerGetTest
-     * @request GET:/api
+     * @tags users
+     * @name Create
+     * @request POST:/api/users
      */
-    appControllerGetTest: (params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/api`,
-        method: "GET",
+    create: (data: CreateUserDto, params: RequestParams = {}) =>
+      this.request<User, ErrorResponse>({
+        path: `/api/users`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
     /**
      * No description
      *
-     * @tags Users
-     * @name UsersControllerFindAll
+     * @tags users
+     * @name FindAll
      * @request GET:/api/users
      */
-    usersControllerFindAll: (params: RequestParams = {}) =>
+    findAll: (params: RequestParams = {}) =>
       this.request<User[], ErrorResponse>({
         path: `/api/users`,
         method: "GET",
@@ -263,12 +350,12 @@ export class Api<
     /**
      * No description
      *
-     * @tags Users
-     * @name UsersControllerGetCurrentUser
+     * @tags users
+     * @name GetCurrentUser
      * @request GET:/api/users/me
      * @secure
      */
-    usersControllerGetCurrentUser: (params: RequestParams = {}) =>
+    getCurrentUser: (params: RequestParams = {}) =>
       this.request<User, ErrorResponse>({
         path: `/api/users/me`,
         method: "GET",
@@ -280,15 +367,59 @@ export class Api<
     /**
      * No description
      *
+     * @tags users
+     * @name FindOne
+     * @request GET:/api/users/{id}
+     */
+    findOne: (id: number, params: RequestParams = {}) =>
+      this.request<User, ErrorResponse>({
+        path: `/api/users/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags users
+     * @name Update
+     * @request PATCH:/api/users/{id}
+     */
+    update: (id: number, data: UpdateUserDto, params: RequestParams = {}) =>
+      this.request<User, ErrorResponse>({
+        path: `/api/users/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags users
+     * @name Delete
+     * @request DELETE:/api/users/{id}
+     */
+    delete: (id: number, params: RequestParams = {}) =>
+      this.request<void, ErrorResponse>({
+        path: `/api/users/${id}`,
+        method: "DELETE",
+        ...params,
+      }),
+  };
+  auth = {
+    /**
+     * No description
+     *
      * @tags auth
-     * @name AuthControllerGoogleLogin
+     * @name GoogleLogin
      * @summary Login with Google
      * @request POST:/api/auth/google/login
      */
-    authControllerGoogleLogin: (
-      data: GoogleLoginDto,
-      params: RequestParams = {},
-    ) =>
+    googleLogin: (data: GoogleLoginDto, params: RequestParams = {}) =>
       this.request<GoogleAuthResponse, ErrorResponse>({
         path: `/api/auth/google/login`,
         method: "POST",

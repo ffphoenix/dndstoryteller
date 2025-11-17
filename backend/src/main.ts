@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { INestApplication } from '@nestjs/common';
 import { writeFileSync } from 'fs';
@@ -27,7 +27,14 @@ function setupOpenAPI(app:INestApplication) {
     .addTag('api')
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const options: SwaggerDocumentOptions =  {
+    operationIdFactory: (
+      controllerKey: string,
+      methodKey: string
+    ) => methodKey
+  };
+
+  const document = SwaggerModule.createDocument(app, config, options);
   writeFileSync('./openapi-schema.json', JSON.stringify(document, null, 2));
 
   SwaggerModule.setup('openapi', app, document, { useGlobalPrefix: true, raw: ['json'] });

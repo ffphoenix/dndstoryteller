@@ -13,7 +13,7 @@ const setCurrentUser = action(user => {
 });
 
 export default async () => {
-  apiClient.api.usersControllerGetCurrentUser().then(
+  apiClient.users.getCurrentUser().then(
     (user) => setCurrentUser(user.data)
   )
 }

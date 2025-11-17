@@ -77,7 +77,7 @@ export class UsersController {
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found', type: ErrorResponse})
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request', type: ErrorResponse})
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal server error', type: ErrorResponse})
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     const user = await this.usersService.findOne(id);
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);

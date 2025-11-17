@@ -3,7 +3,7 @@
   "paths": {
     "/api": {
       "get": {
-        "operationId": "AppController_getTest",
+        "operationId": "getTest",
         "parameters": [],
         "responses": {
           "200": {
@@ -17,7 +17,7 @@
     },
     "/api/users": {
       "post": {
-        "operationId": "UsersController_create",
+        "operationId": "create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -66,7 +66,7 @@
         ]
       },
       "get": {
-        "operationId": "UsersController_findAll",
+        "operationId": "findAll",
         "parameters": [],
         "responses": {
           "200": {
@@ -120,7 +120,7 @@
     },
     "/api/users/me": {
       "get": {
-        "operationId": "UsersController_getCurrentUser",
+        "operationId": "getCurrentUser",
         "parameters": [],
         "responses": {
           "200": {
@@ -166,7 +166,7 @@
     },
     "/api/users/{id}": {
       "get": {
-        "operationId": "UsersController_findOne",
+        "operationId": "findOne",
         "parameters": [
           {
             "name": "id",
@@ -224,7 +224,7 @@
         ]
       },
       "patch": {
-        "operationId": "UsersController_update",
+        "operationId": "update",
         "parameters": [
           {
             "name": "id",
@@ -292,7 +292,7 @@
         ]
       },
       "delete": {
-        "operationId": "UsersController_remove",
+        "operationId": "delete",
         "parameters": [
           {
             "name": "id",
@@ -345,7 +345,7 @@
     },
     "/api/auth/google/login": {
       "post": {
-        "operationId": "AuthController_googleLogin",
+        "operationId": "googleLogin",
         "parameters": [],
         "requestBody": {
           "required": true,
