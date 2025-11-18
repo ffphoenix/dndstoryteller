@@ -394,6 +394,163 @@
           "auth"
         ]
       }
+    },
+    "/api/systems": {
+      "get": {
+        "operationId": "list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/System"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "systems"
+        ]
+      },
+      "post": {
+        "operationId": "create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSystemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "systems"
+        ]
+      }
+    },
+    "/api/systems/{id}": {
+      "get": {
+        "operationId": "getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "systems"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSystemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/System"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "systems"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "systems"
+        ]
+      }
     }
   },
   "info": {
@@ -613,6 +770,90 @@
         "required": [
           "access_token"
         ]
+      },
+      "System": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "description": "System name"
+          },
+          "description": {
+            "type": "string",
+            "description": "System description"
+          },
+          "user_id": {
+            "type": "number",
+            "description": "Owner user id"
+          },
+          "is_public": {
+            "type": "boolean",
+            "description": "Is system public",
+            "default": false
+          },
+          "image_url": {
+            "type": "string",
+            "description": "Image URL"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "user_id",
+          "is_public"
+        ]
+      },
+      "CreateSystemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "System name",
+            "example": "Home made DnD System 5e"
+          },
+          "description": {
+            "type": "string",
+            "description": "System description"
+          },
+          "is_public": {
+            "type": "boolean",
+            "description": "Public visibility",
+            "default": false
+          },
+          "image_url": {
+            "type": "string",
+            "description": "Image URL"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateSystemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "System name",
+            "example": "Home made DnD System 5e"
+          },
+          "description": {
+            "type": "string",
+            "description": "System description"
+          },
+          "is_public": {
+            "type": "boolean",
+            "description": "Public visibility",
+            "default": false
+          },
+          "image_url": {
+            "type": "string",
+            "description": "Image URL"
+          }
+        }
       }
     }
   }
