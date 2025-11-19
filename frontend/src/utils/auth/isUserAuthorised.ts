@@ -1,1 +1,1 @@
-export default () => localStorage.getItem('auth-token') !== null
+export default () => localStorage.getItem("auth-token") !== null;

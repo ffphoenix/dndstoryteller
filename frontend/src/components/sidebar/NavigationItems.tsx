@@ -1,8 +1,5 @@
-import {
-  GridIcon,
-  TableIcon,
-} from '../../icons';
-import React from 'react';
+import { GridIcon, TableIcon } from "../../icons";
+import React from "react";
 
 export type NavItem = {
   name: string;

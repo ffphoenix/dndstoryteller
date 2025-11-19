@@ -5,7 +5,7 @@ import { useSidebar } from "../sidebar/context/SidebarContext";
 import { ThemeToggleButton } from "../common/ThemeToggleButton";
 import NotificationDropdown from "./NotificationDropdown";
 import UserDropdown from "./UserDropdown";
-import Search from './Search';
+import Search from "./Search";
 
 const Header: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);

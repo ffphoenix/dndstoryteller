@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
-import { Link, redirect } from 'react-router';
-import getUserInfo from '../../data/users/reducers/getUserInfo';
-import deleteUserToken from '../../utils/auth/deleteUserToken';
+import { Link, redirect } from "react-router";
+import getUserInfo from "../../data/users/reducers/getUserInfo";
+import deleteUserToken from "../../utils/auth/deleteUserToken";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +18,10 @@ export default function UserDropdown() {
 
   function logout() {
     deleteUserToken();
-    redirect('/auth/login');
+    redirect("/auth/login");
   }
 
-  const currentUser = getUserInfo()
+  const currentUser = getUserInfo();
 
   return (
     <div className="relative">
@@ -33,7 +33,9 @@ export default function UserDropdown() {
           <img src={currentUser.pictureUrl} alt="User" />
         </span>
 
-        <span className="block mr-1 font-medium text-theme-sm">{currentUser.fullName}</span>
+        <span className="block mr-1 font-medium text-theme-sm">
+          {currentUser.fullName}
+        </span>
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""

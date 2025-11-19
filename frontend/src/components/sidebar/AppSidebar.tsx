@@ -1,29 +1,32 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-import {
-  ChevronDownIcon,
-  HorizontaLDots,
-} from "../../icons";
+import { ChevronDownIcon, HorizontaLDots } from "../../icons";
 import { useSidebar } from "./context/SidebarContext";
-import { NavItem, navItems } from './NavigationItems';
+import { NavItem, navItems } from "./NavigationItems";
 
 const AppSidebar: React.FC = () => {
-  const { isExpanded, isMobileOpen, isHovered, setIsHovered, isConditionToShow } = useSidebar();
+  const {
+    isExpanded,
+    isMobileOpen,
+    isHovered,
+    setIsHovered,
+    isConditionToShow,
+  } = useSidebar();
   const location = useLocation();
 
   const [openSubmenu, setOpenSubmenu] = useState<{
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
-    {}
+    {},
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // const isActive = (path: string) => location.pathname === path;
   const isActive = useCallback(
     (path: string) => location.pathname === path,
-    [location.pathname]
+    [location.pathname],
   );
 
   useEffect(() => {
@@ -60,10 +63,7 @@ const AppSidebar: React.FC = () => {
 
   const handleSubmenuToggle = (index: number) => {
     setOpenSubmenu((prevOpenSubmenu) => {
-      if (
-        prevOpenSubmenu &&
-        prevOpenSubmenu.index === index
-      ) {
+      if (prevOpenSubmenu && prevOpenSubmenu.index === index) {
         return null;
       }
       return { index };
@@ -126,7 +126,7 @@ const AppSidebar: React.FC = () => {
                 >
                   {nav.icon}
                 </span>
-                {isConditionToShow&& (
+                {isConditionToShow && (
                   <span className="menu-item-text">{nav.name}</span>
                 )}
               </Link>
@@ -188,8 +188,8 @@ const AppSidebar: React.FC = () => {
           isExpanded || isMobileOpen
             ? "w-[290px]"
             : isHovered
-            ? "w-[290px]"
-            : "w-[90px]"
+              ? "w-[290px]"
+              : "w-[90px]"
         }
         lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}

@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import LoginImage from "../../../assets/img/login-bg.jpeg";
 import { ReactComponent as GitIcon } from "../../../icons/github.svg?react";
 import Button from "../../../components/ui/form/Button";
 import Card from "../../../components/ui/structural/Card";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import loginWithGoogle from "../../../data/users/actions/loginWithGoogle";
-import { redirect } from 'react-router';
+import { redirect } from "react-router";
 
 export default observer(() => {
   return (
@@ -20,12 +20,14 @@ export default observer(() => {
         />
       </div>
       <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
-        <div  className="w-full">
-          <GoogleOAuthProvider clientId={import.meta.env.VITE_AUTH_GOOGLE_CLIENT_ID}>
+        <div className="w-full">
+          <GoogleOAuthProvider
+            clientId={import.meta.env.VITE_AUTH_GOOGLE_CLIENT_ID}
+          >
             <GoogleLogin
               onSuccess={async (credentialResponse) => {
                 await loginWithGoogle(credentialResponse);
-                redirect('/');
+                redirect("/");
               }}
               onError={() => {
                 console.log("Login Failed");

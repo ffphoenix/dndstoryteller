@@ -19,7 +19,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        visibleOnSidebar: true,
+        //visibleOnSidebar: true,
         Component: Dashboard,
       },
     ],

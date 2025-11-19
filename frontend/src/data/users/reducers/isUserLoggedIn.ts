@@ -1,3 +1,6 @@
-import CurrentUser from '../CurrentUser';
+import CurrentUser from "../CurrentUser";
 
-export default () => CurrentUser.email !== undefined && CurrentUser.email !== null && CurrentUser.email !== '';
+export default () =>
+  CurrentUser.email !== undefined &&
+  CurrentUser.email !== null &&
+  CurrentUser.email !== "";

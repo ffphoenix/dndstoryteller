@@ -1,1 +1,1 @@
-export default () => localStorage.removeItem('auth-token');
+export default () => localStorage.removeItem("auth-token");

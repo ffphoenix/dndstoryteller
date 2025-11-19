@@ -7,11 +7,12 @@ This project uses [swagger-typescript-api](https://github.com/acacode/swagger-ty
 
 To generate the API client, you need to:
 
+**If running locally**
 ```bash
-# If running locally
 npm run generate:api-client
-
-# If running in Docker
+```
+If running in Docker
+```bash
 docker exec -ti gateway npm run generate:api-client
 ```
 
@@ -69,20 +70,22 @@ const api = new Api({
 ## Migrations processes 
 
 ### Generate new migration
+If running locally
 ```bash
-# If running locally
 npm run migration:generate
-
-# If running in Docker
+```
+If running in Docker
+```bash
 docker exec -ti gateway npm run migration:generate
 ```
 
 ### Run migrations
+If running locally
 ```bash
-# If running locally
 npm run migration:run
-
-# If running in Docker
+```
+If running in Docker
+```bash
 docker exec -ti gateway npm run migration:run
 ```
 

@@ -1,6 +1,6 @@
-import {observable} from "mobx";
+import { observable } from "mobx";
 
 export default observable({
-    globalLoading: false,
-    sidebarToggle: true,
-})
+  globalLoading: false,
+  sidebarToggle: true,
+});
