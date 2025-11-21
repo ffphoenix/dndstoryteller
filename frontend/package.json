@@ -6,15 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx,tsx,ts --report-unused-disable-directives --max-warnings 0",
-    "lintfix": "eslint . --ext js,jsx,tsx,ts --fix",
+    "lint": "eslint ./src --debug --ext js,jsx,tsx,ts --report-unused-disable-directives --max-warnings 0",
+    "lintfix": "eslint ./src --ext js,jsx,tsx,ts --fix",
     "preview": "vite preview"
   },
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/postcss": "^4.1.17",
     "axios": "^1.7.2",
-    "eslint-plugin-prettier": "^5.5.4",
     "mobx": "^6.12.4",
     "mobx-react-lite": "^4.0.7",
     "primereact": "^10.9.7",
@@ -31,8 +30,11 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.0",
     "vite-plugin-svgr": "^4.2.0"

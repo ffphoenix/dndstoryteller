@@ -1,4 +1,3 @@
-import * as React from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import routesConfig from "./routes/routesConfig";
