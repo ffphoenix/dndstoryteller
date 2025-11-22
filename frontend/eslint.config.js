@@ -17,6 +17,7 @@ export default tseslint.config(
     },
     rules: {
       "react/display-name": "off",
+      "react/prop-types": "off",
     },
   },
 );

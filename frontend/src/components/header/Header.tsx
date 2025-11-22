@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Link } from "react-router";
 import { useSidebar } from "../sidebar/context/SidebarContext";
 import { ThemeToggleButton } from "../common/ThemeToggleButton";
@@ -8,8 +6,6 @@ import UserDropdown from "./UserDropdown";
 import Search from "./Search";
 
 const Header: React.FC = () => {
-  const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
-
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
 
   const handleToggle = () => {
@@ -18,10 +14,6 @@ const Header: React.FC = () => {
     } else {
       toggleMobileSidebar();
     }
-  };
-
-  const toggleApplicationMenu = () => {
-    setApplicationMenuOpen(!isApplicationMenuOpen);
   };
 
   return (

@@ -1,12 +1,13 @@
-import React from "react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import LoginImage from "../../../assets/img/login-bg.jpeg";
 import { ReactComponent as GitIcon } from "../../../icons/github.svg?react";
-import Button from "../../../components/ui/form/Button";
 import Card from "../../../components/ui/structural/Card";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { observer } from "mobx-react-lite";
 import loginWithGoogle from "../../../data/users/actions/loginWithGoogle";
 import { redirect } from "react-router";
+import { Button } from "primereact/button";
 
 export default observer(() => {
   return (
@@ -36,10 +37,12 @@ export default observer(() => {
             />
           </GoogleOAuthProvider>
           <hr className="my-8" />
-          <Button>
-            <GitIcon className="w-4 h-4 mr-2" aria-hidden="true" />
-            Github
-          </Button>
+          <Button
+            className="p-button-lg"
+            icon={<GitIcon className="w-4 h-4 mr-2" aria-hidden="true" />}
+            iconPos="left"
+            label="Github"
+          />
         </div>
       </main>
     </Card>

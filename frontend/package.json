@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint ./src --debug --ext js,jsx,tsx,ts --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint ./src --ext js,jsx,tsx,ts --report-unused-disable-directives --max-warnings 0",
     "lintfix": "eslint ./src --ext js,jsx,tsx,ts --fix",
     "preview": "vite preview"
   },
