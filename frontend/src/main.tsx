@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+
 import "./index.css";
+import "./App.css";
 
 const rootNode = document.getElementById("root");
 if (!rootNode) throw new Error("Root node not found");

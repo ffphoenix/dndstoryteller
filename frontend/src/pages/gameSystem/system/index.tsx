@@ -1,5 +1,10 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import EntityPopup from "./EntityPopup";
+import { observer } from "mobx-react-lite";
+import systemsStorage from "../../../data/systems/Systems";
 
 const dataTableConfig = [
   { header: "ID", key: "id", data: "id" },
@@ -7,16 +12,23 @@ const dataTableConfig = [
   { header: "Description", key: "description", data: "description" },
 ];
 
-const systems = [{ id: 1, name: "System 1", description: "Description 1" }];
-
-export default () => {
+export default observer(() => {
   return (
-    <div className="card">
-      <DataTable value={systems} tableStyle={{ minWidth: "50rem" }}>
+    <Card>
+      <div className="flex justify-between content-center mb-2">
+        <h1 className="text-2xl font-bold mb-4">Systems</h1>
+        <Button
+          label="Add"
+          icon="pi pi-plus"
+          onClick={() => systemsStorage.togglePopup()}
+        />
+      </div>
+      <DataTable value={systemsStorage.list} size={"small"}>
         {dataTableConfig.map((column) => (
           <Column key={column.key} field={column.data} header={column.header} />
         ))}
       </DataTable>
-    </div>
+      <EntityPopup />
+    </Card>
   );
-};
+});

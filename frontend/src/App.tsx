@@ -1,4 +1,3 @@
-import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import routesConfig from "./routes/routesConfig";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -8,8 +7,9 @@ import getCurrentUser from "./data/users/actions/setCurrentUser";
 export default () => {
   getCurrentUser();
   const router = createBrowserRouter(routesConfig);
+  console.log(router);
   return (
-    <PrimeReactProvider>
+    <PrimeReactProvider value={{ ripple: false }}>
       <ThemeProvider>
         <RouterProvider router={router} />
       </ThemeProvider>

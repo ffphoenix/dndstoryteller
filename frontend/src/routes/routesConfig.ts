@@ -1,10 +1,10 @@
 import Layout from "../layouts/Layout";
-import type { RouteObject } from "./roterCustomTypes";
-import loginRoute from "../pages/auth/login/loginRoute";
+import loginRoute from "../pages/auth/login/route";
 import GuestLayout from "../layouts/GuestLayout";
-import { redirect } from "react-router";
+import { redirect, type RouteObject } from "react-router";
 import isUserAuthorised from "../utils/auth/isUserAuthorised";
 import Dashboard from "../pages/Dashboard";
+import gameSystemRouter from "../pages/gameSystem/route";
 
 const routes: RouteObject[] = [
   {
@@ -19,11 +19,11 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        //visibleOnSidebar: true,
         Component: Dashboard,
       },
+      gameSystemRouter,
     ],
-  } as RouteObject,
+  },
   {
     path: "auth",
     loader() {

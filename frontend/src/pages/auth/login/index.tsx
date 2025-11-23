@@ -27,6 +27,9 @@ export default observer(() => {
           >
             <GoogleLogin
               onSuccess={async (credentialResponse) => {
+                // @todo fix this type error
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-expect-error
                 await loginWithGoogle(credentialResponse);
                 redirect("/");
               }}

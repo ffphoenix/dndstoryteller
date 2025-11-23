@@ -117,6 +117,57 @@ export interface GoogleAuthResponse {
   access_token: string;
 }
 
+export interface System {
+  id: number;
+  /** System name */
+  name: string;
+  /** System description */
+  description?: string;
+  /** Owner user id */
+  user_id: number;
+  /**
+   * Is system public
+   * @default false
+   */
+  is_public: boolean;
+  /** Image URL */
+  image_url?: string;
+}
+
+export interface CreateSystemDto {
+  /**
+   * System name
+   * @example "Home made DnD System 5e"
+   */
+  name: string;
+  /** System description */
+  description?: string;
+  /**
+   * Public visibility
+   * @default false
+   */
+  is_public?: boolean;
+  /** Image URL */
+  image_url?: string;
+}
+
+export interface UpdateSystemDto {
+  /**
+   * System name
+   * @example "Home made DnD System 5e"
+   */
+  name?: string;
+  /** System description */
+  description?: string;
+  /**
+   * Public visibility
+   * @default false
+   */
+  is_public?: boolean;
+  /** Image URL */
+  image_url?: string;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -426,6 +477,91 @@ export class Api<
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+  };
+  systems = {
+    /**
+     * No description
+     *
+     * @tags systems
+     * @name List
+     * @request GET:/api/systems
+     */
+    list: (params: RequestParams = {}) =>
+      this.request<System[], any>({
+        path: `/api/systems`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags systems
+     * @name Create
+     * @request POST:/api/systems
+     * @secure
+     */
+    create: (data: CreateSystemDto, params: RequestParams = {}) =>
+      this.request<System, any>({
+        path: `/api/systems`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags systems
+     * @name GetOne
+     * @request GET:/api/systems/{id}
+     */
+    getOne: (id: number, params: RequestParams = {}) =>
+      this.request<System, any>({
+        path: `/api/systems/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags systems
+     * @name Update
+     * @request PATCH:/api/systems/{id}
+     * @secure
+     */
+    update: (id: number, data: UpdateSystemDto, params: RequestParams = {}) =>
+      this.request<System, any>({
+        path: `/api/systems/${id}`,
+        method: "PATCH",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags systems
+     * @name Remove
+     * @request DELETE:/api/systems/{id}
+     * @secure
+     */
+    remove: (id: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/systems/${id}`,
+        method: "DELETE",
+        secure: true,
         ...params,
       }),
   };
