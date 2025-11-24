@@ -1,0 +1,18 @@
+import React from "react";
+import type { InputError } from "../createDataStorage";
+
+export type ValidationFunction = (value: string) => string | undefined;
+export type FieldConfig = {
+  dataKey: string;
+  label: string;
+  type?: "text" | "number" | "switch";
+  render?: () => React.ReactNode;
+  validators?: ValidationFunction[];
+  errors?: InputError[];
+};
+
+export type FormConfig = {
+  validateOn?: "change" | "blur";
+  onSubmit: () => void;
+  fields: FieldConfig[];
+};

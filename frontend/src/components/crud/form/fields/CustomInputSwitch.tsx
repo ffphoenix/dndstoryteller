@@ -1,22 +1,18 @@
 import React from "react";
-import {
-  InputSwitch,
-  type InputSwitchChangeEvent,
-  type InputSwitchProps,
-} from "primereact/inputswitch";
+import { InputSwitch, type InputSwitchChangeEvent, type InputSwitchProps } from "primereact/inputswitch";
 
-type CustomInputSwitchProps = {
+type CustomInputSwitchProps<T> = {
   label: string;
   dataKey: string;
   value: boolean;
-  onChange: (e: { [p: string]: boolean }) => void;
+  onChange: (data: Partial<T>) => void;
   className?: string;
+  helpText?: string;
 };
 
-export default ({ ...props }: CustomInputSwitchProps) => {
+export default <T,>({ ...props }: CustomInputSwitchProps<T>) => {
   const customOnchange = (e: InputSwitchChangeEvent) => {
-    console.log("Sw", e.value);
-    props.onChange({ [props.dataKey]: e.value });
+    props.onChange({ [props.dataKey]: e.value } as Partial<T>);
   };
 
   const InputProps: InputSwitchProps = {
@@ -31,6 +27,7 @@ export default ({ ...props }: CustomInputSwitchProps) => {
         {props.label}
       </label>
       <InputSwitch {...InputProps} />
+      {props.helpText && <small id={props.dataKey + "-help"}>{props.helpText}</small>}
     </div>
   );
 };

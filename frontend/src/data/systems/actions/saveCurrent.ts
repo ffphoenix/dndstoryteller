@@ -12,11 +12,12 @@ export default () => {
       systemsStorage.current = {
         ...system.data,
       };
-      systemsStorage.UI.showPopup = false;
-      systemsStorage.UI.loading = false;
+      systemsStorage.togglePopup();
+      systemsStorage.formUI.isLoading = false;
     });
   };
-  runInAction(() => (systemsStorage.UI.loading = true));
+
+  runInAction(() => (systemsStorage.formUI.isLoading = true));
   if (current.id === 0) {
     ApiClient.systems.create(current).then(updateStorage);
   } else {
