@@ -46,7 +46,7 @@ lerna-debug.log*
 .temp
 .tmp
 
-# Runtime globalStore
+# Runtime data
 pids
 *.pid
 *.seed
