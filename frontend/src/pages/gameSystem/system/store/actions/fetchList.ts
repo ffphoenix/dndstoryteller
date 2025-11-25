@@ -1,9 +1,9 @@
 import ApiClient from "../../../../../utils/apiClient";
 import { runInAction } from "mobx";
-import systemsStorage from "../Systems";
+import SystemsStorage from "../Systems";
 
 export default () => {
   ApiClient.systems.list().then((response) => {
-    runInAction(() => (systemsStorage.list = response.data));
+    runInAction(() => (SystemsStorage.list = response.data));
   });
 };

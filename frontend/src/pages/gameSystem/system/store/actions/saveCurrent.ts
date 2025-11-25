@@ -1,25 +1,25 @@
 import ApiClient from "../../../../../utils/apiClient";
 import { runInAction } from "mobx";
-import systemsStorage from "../Systems";
+import SystemsStorage from "../Systems";
 import type { AxiosResponse } from "axios";
 import type { System } from "../../../../../../generated/api";
 import fetchList from "./fetchList";
 
 export default () => {
-  const current = systemsStorage.current;
+  const current = SystemsStorage.current;
 
   const updateStorage = (system: AxiosResponse<System>) => {
     runInAction(() => {
-      systemsStorage.current = {
+      SystemsStorage.current = {
         ...system.data,
       };
-      systemsStorage.togglePopup();
-      systemsStorage.formUI.isLoading = false;
+      SystemsStorage.togglePopup();
+      SystemsStorage.formUI.isLoading = false;
     });
     fetchList();
   };
 
-  runInAction(() => (systemsStorage.formUI.isLoading = true));
+  runInAction(() => (SystemsStorage.formUI.isLoading = true));
   if (current.id === 0) {
     ApiClient.systems.create(current).then(updateStorage);
   } else {

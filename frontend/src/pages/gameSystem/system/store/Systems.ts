@@ -8,6 +8,6 @@ const getDefaultSystem = () => ({
   description: "",
   is_public: false,
 });
-const systemsStorage = createDataStorage<System>(getDefaultSystem);
+const SystemsStorage = createDataStorage<System>(getDefaultSystem);
 
-export default systemsStorage;
+export default SystemsStorage;

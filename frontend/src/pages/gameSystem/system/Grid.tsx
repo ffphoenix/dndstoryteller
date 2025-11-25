@@ -1,14 +1,15 @@
 import React from "react";
 import { Button } from "primereact/button";
-import { DataView } from "primereact/dataview";
 import { Tag } from "primereact/tag";
 import type { System } from "../../../../generated/api";
-import systemsStorage from "./store/Systems";
+import SystemsStorage from "./store/Systems";
 import openPopupForEdit from "./store/actions/openPopupForEdit";
 import { observer } from "mobx-react-lite";
+import selectSystem from "../../../globalStore/selectedSystem/actions/selectAndMemorize";
+import SelectedSystem from "../../../globalStore/selectedSystem/SelectedSystem";
 
 export default observer(() => {
-  const gridItem = (system: System) => {
+  const gridItem = (system: System, selectedSystem: { id: number }) => {
     return (
       <div className="col-12 sm:col-6 lg:col-12 xl:col-4 p-2 min-w-1/4" key={system.id}>
         <div className="p-4 border-1 surface-border surface-card border-round">
@@ -22,7 +23,12 @@ export default observer(() => {
             <div className="text-2xl font-bold">{system.description}</div>
           </div>
           <div className="flex align-items-center justify-content-center gap-2">
-            <Button label="Select" icon="pi pi-check" onClick={() => null} />
+            <Button
+              label="Select"
+              icon="pi pi-check"
+              onClick={() => selectSystem(system.id)}
+              className={selectedSystem?.id === system.id ? "p-button-success" : ""}
+            />
             <Button label="Edit" icon="pi pi-pencil" onClick={() => openPopupForEdit(system.id)} />
           </div>
         </div>
@@ -30,13 +36,15 @@ export default observer(() => {
     );
   };
 
-  const listTemplate = (listItems: System[]) => {
-    return <div className="grid grid-nogutter">{listItems.map((system: System) => gridItem(system))}</div>;
-  };
-
   return (
     <div className="card">
-      <DataView value={systemsStorage.list} listTemplate={listTemplate} layout={"grid"} />
+      <div className="p-dataview p-component p-dataview-grid" data-pc-name="dataview" data-pc-section="root">
+        <div className="p-dataview-content" data-pc-section="content">
+          <div className="grid grid-nogutter">
+            {SystemsStorage.list.map((system: System) => gridItem(system, SelectedSystem))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 });

@@ -11,6 +11,6 @@ const setCurrentUser = action((user: User) => {
   CurrentUser.lastName = user.lastName;
 });
 
-export default async () => {
+export default () => {
   apiClient.users.getCurrentUser().then((user) => setCurrentUser(user.data));
 };

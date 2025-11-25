@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { useSidebar } from "../sidebar/context/SidebarContext";
 import { ThemeToggleButton } from "../common/ThemeToggleButton";
 import UserDropdown from "./UserDropdown";
-import Search from "./Search";
+import SelectedGameSystem from "./SelectedGameSystem";
 
 const Header: React.FC = () => {
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
@@ -25,13 +25,7 @@ const Header: React.FC = () => {
             aria-label="Toggle Sidebar"
           >
             {isMobileOpen ? (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -40,13 +34,7 @@ const Header: React.FC = () => {
                 />
               </svg>
             ) : (
-              <svg
-                width="16"
-                height="12"
-                viewBox="0 0 16 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -59,19 +47,11 @@ const Header: React.FC = () => {
           </button>
 
           <Link to="/" className="lg:hidden">
-            <img
-              className="dark:hidden"
-              src="./images/logo/logo.svg"
-              alt="Logo"
-            />
-            <img
-              className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
-              alt="Logo"
-            />
+            <img className="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
+            <img className="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" />
           </Link>
-
-          <Search />
+          <SelectedGameSystem />
+          {/*<Search />*/}
 
           <div className="flex gap-2 2xsm:gap-3 ml-auto">
             {/* <!-- Dark Mode Toggler --> */}

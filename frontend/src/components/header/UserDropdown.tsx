@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { redirect } from "react-router";
-import getUserInfo from "../../data/users/reducers/getUserInfo";
+import getUserInfo from "../../globalStore/users/reducers/getUserInfo";
 import deleteUserToken from "../../utils/auth/deleteUserToken";
 import { observer } from "mobx-react-lite";
 import { Menu } from "primereact/menu";
@@ -34,9 +34,7 @@ export default observer(() => {
           <img src={currentUser.pictureUrl} alt="User" />
         </span>
 
-        <span className="block mr-1 font-medium text-theme-sm">
-          {currentUser.fullName}
-        </span>
+        <span className="block mr-1 font-medium text-theme-sm">{currentUser.fullName}</span>
       </button>
       <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
     </div>

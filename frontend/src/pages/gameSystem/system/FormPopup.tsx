@@ -1,7 +1,7 @@
 import { Dialog } from "primereact/dialog";
 import { observer } from "mobx-react-lite";
 import type { System } from "../../../../generated/api";
-import systemsStorage from "./store/Systems";
+import SystemsStorage from "./store/Systems";
 import saveCurrent from "./store/actions/saveCurrent";
 import CrudForm from "../../../components/crud/form/CrudForm";
 import notEmpty from "../../../components/crud/form/validators/notEmpty";
@@ -36,16 +36,16 @@ export default observer(() => {
   return (
     <div>
       <Dialog
-        header={systemsStorage.isCurrentNew ? "Add System" : "Edit System"}
-        visible={systemsStorage.isPopupVisible}
+        header={SystemsStorage.isCurrentNew ? "Add System" : "Edit System"}
+        visible={SystemsStorage.isPopupVisible}
         maximizable
         style={{ width: "50vw" }}
         onHide={() => {
-          if (!systemsStorage.isPopupVisible) return;
-          systemsStorage.togglePopup();
+          if (!SystemsStorage.isPopupVisible) return;
+          SystemsStorage.togglePopup();
         }}
       >
-        <CrudForm<System> config={formConfig} storageData={systemsStorage} />
+        <CrudForm<System> config={formConfig} storageData={SystemsStorage} />
       </Dialog>
     </div>
   );
