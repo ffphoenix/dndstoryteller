@@ -53,6 +53,7 @@ export class UsersController {
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized', type: ErrorResponse })
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Internal server error', type: ErrorResponse })
   async getCurrentUser(@CurrentUser() user: User): Promise<User> {
+    console.log('!!!user ===>', user);
     return user;
   }
 

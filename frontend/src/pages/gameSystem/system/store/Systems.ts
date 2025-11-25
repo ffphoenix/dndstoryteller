@@ -1,5 +1,5 @@
-import type { System } from "../../../generated/api";
-import createDataStorage from "../../components/crud/createDataStorage";
+import type { System } from "../../../../../generated/api";
+import createDataStorage from "../../../../components/crud/createDataStorage";
 
 const getDefaultSystem = () => ({
   id: 0,

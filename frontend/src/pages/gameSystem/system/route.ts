@@ -1,13 +1,13 @@
 import ThisComponent from "./index";
 import type { RouteObject } from "react-router";
-import loadList from "../../../data/systems/actions/loadList";
+import fetchList from "./store/actions/fetchList";
 
 const systemRoute: RouteObject = {
   index: true,
   path: "system",
   Component: ThisComponent,
   loader: () => {
-    loadList();
+    fetchList();
   },
 };
 export default systemRoute;

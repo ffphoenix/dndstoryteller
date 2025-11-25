@@ -1,8 +1,9 @@
-import ApiClient from "../../../utils/apiClient";
+import ApiClient from "../../../../../utils/apiClient";
 import { runInAction } from "mobx";
 import systemsStorage from "../Systems";
 import type { AxiosResponse } from "axios";
-import type { System } from "../../../../generated/api";
+import type { System } from "../../../../../../generated/api";
+import fetchList from "./fetchList";
 
 export default () => {
   const current = systemsStorage.current;
@@ -15,6 +16,7 @@ export default () => {
       systemsStorage.togglePopup();
       systemsStorage.formUI.isLoading = false;
     });
+    fetchList();
   };
 
   runInAction(() => (systemsStorage.formUI.isLoading = true));

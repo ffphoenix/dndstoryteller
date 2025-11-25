@@ -7,7 +7,6 @@ import getCurrentUser from "./data/users/actions/setCurrentUser";
 export default () => {
   getCurrentUser();
   const router = createBrowserRouter(routesConfig);
-  console.log(router);
   return (
     <PrimeReactProvider value={{ ripple: false }}>
       <ThemeProvider>

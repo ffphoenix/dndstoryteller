@@ -1,8 +1,8 @@
 import { Dialog } from "primereact/dialog";
 import { observer } from "mobx-react-lite";
 import type { System } from "../../../../generated/api";
-import systemsStorage from "../../../data/systems/Systems";
-import saveCurrent from "../../../data/systems/actions/saveCurrent";
+import systemsStorage from "./store/Systems";
+import saveCurrent from "./store/actions/saveCurrent";
 import CrudForm from "../../../components/crud/form/CrudForm";
 import notEmpty from "../../../components/crud/form/validators/notEmpty";
 import maxLength from "../../../components/crud/form/validators/maxLength";

@@ -20,7 +20,6 @@ export default <T,>({ ...props }: CustomInputTextProps<T>) => {
   const customOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.onChange({ [props.dataKey]: e.target.value } as Partial<T>);
   };
-  console.log("render text input", props.errors);
   const isValid = props?.errors && props.errors?.length > 0;
   const textInputProps: InputTextProps = {
     id: props.dataKey,

@@ -9,6 +9,7 @@ import { UpdateSystemDto } from '../application/dto/update-system.dto';
 import { System } from '../domain/system.entity';
 
 @ApiTags('systems')
+@UseGuards(JwtAuthGuard)
 @Controller('systems')
 export class SystemsController {
   constructor(private readonly systemsService: SystemsService) {}
@@ -18,7 +19,7 @@ export class SystemsController {
   @ApiResponse({ status: HttpStatus.OK, type: System, isArray: true })
   async list(@CurrentUser() user?: User): Promise<System[]> {
     const userId = user?.id;
-    return this.systemsService.findAllPublicAndOwned(userId);
+    return this.systemsService.findAllPublicOrOwned(userId);
   }
 
   @Get(':id')

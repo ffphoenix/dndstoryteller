@@ -12,8 +12,8 @@ export class SystemsService {
     return this.repo.createAndSave({ ...dto, user_id: ownerId });
   }
 
-  async findAllPublicAndOwned(userId?: number): Promise<System[]> {
-    return this.repo.findPublicAndOwned(userId);
+  async findAllPublicOrOwned(userId?: number): Promise<System[]> {
+    return this.repo.findPublicOrOwned(userId);
   }
 
   async findVisibleById(id: number, userId?: number): Promise<System> {
