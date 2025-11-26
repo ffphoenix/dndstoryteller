@@ -20,8 +20,7 @@ async function bootstrap() {
 bootstrap();
 
 function setupOpenAPI(app: INestApplication) {
-  console.log('Setup OpenAPI');
-  const config = new DocumentBuilder().setTitle('API Documentation').setVersion('1.0').addTag('api').build();
+  const config = new DocumentBuilder().setTitle('API Documentation').setVersion('1.0').addTag('Api').build();
 
   const options: SwaggerDocumentOptions = {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,

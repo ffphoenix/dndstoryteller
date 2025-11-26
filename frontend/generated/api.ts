@@ -168,6 +168,49 @@ export interface UpdateSystemDto {
   image_url?: string;
 }
 
+export interface Stat {
+  id: number;
+  /** Stat name */
+  name: string;
+  /** Stat description */
+  description?: string;
+  /**
+   * Hidden from non-owners
+   * @default false
+   */
+  is_hidden: boolean;
+  /** Related system id */
+  system_id: number;
+}
+
+export interface CreateStatDto {
+  /** Stat name */
+  name: string;
+  /** Stat description */
+  description?: string;
+  /**
+   * Hidden from non-owners
+   * @default false
+   */
+  is_hidden?: boolean;
+  /** Related system id */
+  system_id: number;
+}
+
+export interface UpdateStatDto {
+  /** Stat name */
+  name?: string;
+  /** Stat description */
+  description?: string;
+  /**
+   * Hidden from non-owners
+   * @default false
+   */
+  is_hidden?: boolean;
+  /** Related system id */
+  system_id?: number;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -351,20 +394,21 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<
   SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
-  /**
-   * No description
-   *
-   * @tags App
-   * @name GetTest
-   * @request GET:/api
-   */
-  getTest = (params: RequestParams = {}) =>
-    this.request<void, any>({
-      path: `/api`,
-      method: "GET",
-      ...params,
-    });
-
+  app = {
+    /**
+     * No description
+     *
+     * @tags App
+     * @name GetTest
+     * @request GET:/api
+     */
+    getTest: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api`,
+        method: "GET",
+        ...params,
+      }),
+  };
   users = {
     /**
      * No description
@@ -560,6 +604,100 @@ export class Api<
     remove: (id: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/systems/${id}`,
+        method: "DELETE",
+        secure: true,
+        ...params,
+      }),
+  };
+  stats = {
+    /**
+     * No description
+     *
+     * @tags stats
+     * @name List
+     * @request GET:/api/systems/{systemId}/stats
+     */
+    list: (systemId: number, params: RequestParams = {}) =>
+      this.request<Stat[], any>({
+        path: `/api/systems/${systemId}/stats`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags stats
+     * @name Create
+     * @request POST:/api/systems/{systemId}/stats
+     * @secure
+     */
+    create: (
+      systemId: number,
+      data: CreateStatDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Stat, any>({
+        path: `/api/systems/${systemId}/stats`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags stats
+     * @name GetOne
+     * @request GET:/api/systems/{systemId}/stats/{id}
+     */
+    getOne: (id: number, systemId: number, params: RequestParams = {}) =>
+      this.request<Stat, any>({
+        path: `/api/systems/${systemId}/stats/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags stats
+     * @name Update
+     * @request PATCH:/api/systems/{systemId}/stats/{id}
+     * @secure
+     */
+    update: (
+      id: number,
+      systemId: string,
+      data: UpdateStatDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Stat, any>({
+        path: `/api/systems/${systemId}/stats/${id}`,
+        method: "PATCH",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags stats
+     * @name Remove
+     * @request DELETE:/api/systems/{systemId}/stats/{id}
+     * @secure
+     */
+    remove: (id: number, systemId: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/systems/${systemId}/stats/${id}`,
         method: "DELETE",
         secure: true,
         ...params,

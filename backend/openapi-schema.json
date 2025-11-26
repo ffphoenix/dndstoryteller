@@ -551,6 +551,189 @@
           "systems"
         ]
       }
+    },
+    "/api/systems/{systemId}/stats": {
+      "get": {
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Stat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "stats"
+        ]
+      },
+      "post": {
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stat"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "stats"
+        ]
+      }
+    },
+    "/api/systems/{systemId}/stats/{id}": {
+      "get": {
+        "operationId": "getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stat"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "stats"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stat"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "stats"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "stats"
+        ]
+      }
     }
   },
   "info": {
@@ -561,7 +744,7 @@
   },
   "tags": [
     {
-      "name": "api",
+      "name": "Api",
       "description": ""
     }
   ],
@@ -852,6 +1035,85 @@
           "image_url": {
             "type": "string",
             "description": "Image URL"
+          }
+        }
+      },
+      "Stat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "description": "Stat name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Stat description"
+          },
+          "is_hidden": {
+            "type": "boolean",
+            "description": "Hidden from non-owners",
+            "default": false
+          },
+          "system_id": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "is_hidden",
+          "system_id"
+        ]
+      },
+      "CreateStatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Stat name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Stat description"
+          },
+          "is_hidden": {
+            "type": "boolean",
+            "description": "Hidden from non-owners",
+            "default": false
+          },
+          "system_id": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        },
+        "required": [
+          "name",
+          "system_id"
+        ]
+      },
+      "UpdateStatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Stat name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Stat description"
+          },
+          "is_hidden": {
+            "type": "boolean",
+            "description": "Hidden from non-owners",
+            "default": false
+          },
+          "system_id": {
+            "type": "number",
+            "description": "Related system id"
           }
         }
       }

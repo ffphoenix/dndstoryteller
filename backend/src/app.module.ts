@@ -6,7 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import typeorm from './config/typeorm';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { SystemsModule } from './modules/gameSystem/system/systems.module';
+import { SystemsModule } from './modules/gameSystem/systems/systems.module';
+import { StatsModule } from './modules/gameSystem/stats/stats.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SystemsModule } from './modules/gameSystem/system/systems.module';
     UsersModule,
     AuthModule,
     SystemsModule,
+    StatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
