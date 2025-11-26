@@ -17,11 +17,6 @@ export const navItems: NavItem[] = [
   {
     name: "Game system",
     icon: <TableIcon />,
-    subItems: [
-      { name: "System", path: "/game-system" },
-      { name: "Stats", path: "/stats" },
-      { name: "Abilities", path: "/abilities" },
-      { name: "Traits", path: "/traits" },
-    ],
+    subItems: [{ name: "Systems", path: "/game-systems" }],
   },
 ];

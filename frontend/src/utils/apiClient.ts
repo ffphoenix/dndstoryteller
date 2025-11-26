@@ -6,6 +6,7 @@ import { redirect } from "react-router";
 
 const apiClient = new Api({
   secure: false,
+  // @ts-ignore
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 5000, // 5 seconds
   headers: {

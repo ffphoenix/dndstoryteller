@@ -1,13 +1,13 @@
-import System from "./system";
+import System from "./systems";
 import type { RouteObject } from "react-router";
-import systemRoute from "./system/route";
-import loadList from "./system/store/actions/fetchList";
+import systemRoute from "./systems/route";
+import loadList from "./systems/store/actions/fetchList";
 
 const gameSystemRouter: RouteObject = {
   loader: () => {
     loadList();
   },
-  path: "game-system",
+  path: "game-systems",
   Component: System,
   children: [systemRoute],
 };

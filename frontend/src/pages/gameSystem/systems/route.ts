@@ -4,7 +4,7 @@ import fetchList from "./store/actions/fetchList";
 
 const systemRoute: RouteObject = {
   index: true,
-  path: "system",
+  path: "systems",
   Component: ThisComponent,
   loader: () => {
     fetchList();

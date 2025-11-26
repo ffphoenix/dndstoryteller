@@ -7,6 +7,7 @@ import openPopupForEdit from "./store/actions/openPopupForEdit";
 import { observer } from "mobx-react-lite";
 import selectSystem from "../../../globalStore/selectedSystem/actions/selectAndMemorize";
 import SelectedSystem from "../../../globalStore/selectedSystem/SelectedSystem";
+import { redirect } from "react-router";
 
 export default observer(() => {
   const gridItem = (system: System, selectedSystem: { id: number }) => {
@@ -26,7 +27,7 @@ export default observer(() => {
             <Button
               label="Select"
               icon="pi pi-check"
-              onClick={() => selectSystem(system.id)}
+              onClick={() => redirect("/game-systems/" + system.id + "/")}
               className={selectedSystem?.id === system.id ? "p-button-success" : ""}
             />
             <Button label="Edit" icon="pi pi-pencil" onClick={() => openPopupForEdit(system.id)} />
