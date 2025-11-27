@@ -673,7 +673,7 @@ export class Api<
      */
     update: (
       id: number,
-      systemId: string,
+      systemId: number,
       data: UpdateStatDto,
       params: RequestParams = {},
     ) =>
@@ -695,7 +695,7 @@ export class Api<
      * @request DELETE:/api/systems/{systemId}/stats/{id}
      * @secure
      */
-    remove: (id: number, systemId: string, params: RequestParams = {}) =>
+    remove: (id: number, systemId: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/systems/${systemId}/stats/${id}`,
         method: "DELETE",

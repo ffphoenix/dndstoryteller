@@ -1,4 +1,4 @@
-import selectAndMemorize from "./selectAndMemorize";
+import selectAndMemorize from "./selectSystem";
 
 export default () => {
   const selectedSystemId = localStorage.getItem("selected-system");

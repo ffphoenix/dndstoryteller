@@ -5,11 +5,11 @@ import type { System } from "../../../../generated/api";
 import SystemsStorage from "./store/Systems";
 import openPopupForEdit from "./store/actions/openPopupForEdit";
 import { observer } from "mobx-react-lite";
-import selectSystem from "../../../globalStore/selectedSystem/actions/selectAndMemorize";
 import SelectedSystem from "../../../globalStore/selectedSystem/SelectedSystem";
-import { redirect } from "react-router";
+import { useNavigate } from "react-router";
 
 export default observer(() => {
+  const navigate = useNavigate();
   const gridItem = (system: System, selectedSystem: { id: number }) => {
     return (
       <div className="col-12 sm:col-6 lg:col-12 xl:col-4 p-2 min-w-1/4" key={system.id}>
@@ -24,12 +24,7 @@ export default observer(() => {
             <div className="text-2xl font-bold">{system.description}</div>
           </div>
           <div className="flex align-items-center justify-content-center gap-2">
-            <Button
-              label="Select"
-              icon="pi pi-check"
-              onClick={() => redirect("/game-systems/" + system.id + "/")}
-              className={selectedSystem?.id === system.id ? "p-button-success" : ""}
-            />
+            <Button label="Manage" icon="pi pi-arrow-left" onClick={() => navigate("/systems/" + system.id + "/")} />
             <Button label="Edit" icon="pi pi-pencil" onClick={() => openPopupForEdit(system.id)} />
           </div>
         </div>

@@ -43,7 +43,11 @@ class StatsController {
   @UseGuards(SystemOwnerGuard)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: HttpStatus.OK, type: Stat })
-  async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateStatDto): Promise<Stat> {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('systemId', ParseIntPipe) systemId: number,
+    @Body() dto: UpdateStatDto,
+  ): Promise<Stat> {
     return this.statsService.update(id, dto);
   }
 
@@ -51,7 +55,7 @@ class StatsController {
   @ApiBearerAuth()
   @UseGuards(SystemOwnerGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number, @Param('systemId', ParseIntPipe) systemId: number): Promise<void> {
     return this.statsService.remove(id);
   }
 }
