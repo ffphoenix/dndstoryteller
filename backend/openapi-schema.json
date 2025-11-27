@@ -1064,6 +1064,10 @@
             "type": "string",
             "description": "Stat name"
           },
+          "short_name": {
+            "type": "string",
+            "description": "Stat name short name"
+          },
           "description": {
             "type": "string",
             "description": "Stat description"
@@ -1081,6 +1085,7 @@
         "required": [
           "id",
           "name",
+          "short_name",
           "is_hidden",
           "system_id"
         ]

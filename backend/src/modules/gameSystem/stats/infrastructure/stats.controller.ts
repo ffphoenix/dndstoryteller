@@ -10,13 +10,13 @@ import { SystemOwnerGuard } from '../../systems/application/guards/system.owner.
 
 @ApiTags('stats')
 @UseGuards(JwtAuthGuard)
-@UseGuards(SystemAccessibleGuard)
 @Controller('systems/:systemId/stats')
 class StatsController {
   constructor(private readonly statsService: StatsService) {}
 
   @Get('/')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(SystemAccessibleGuard)
   @ApiResponse({ status: HttpStatus.OK, type: Stat, isArray: true })
   async list(@Param('systemId', ParseIntPipe) systemId: number): Promise<Stat[]> {
     return this.statsService.listBySystem(systemId);
@@ -24,6 +24,7 @@ class StatsController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(SystemAccessibleGuard)
   @ApiResponse({ status: HttpStatus.OK, type: Stat })
   async getOne(@Param('id', ParseIntPipe) id: number, @Param('systemId', ParseIntPipe) systemId: number): Promise<Stat> {
     return this.statsService.findById(id, systemId);

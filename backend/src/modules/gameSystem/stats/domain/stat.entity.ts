@@ -9,16 +9,18 @@ export class Stat {
   id: number;
 
   @ApiProperty({ description: 'Stat name' })
-  @Index()
   @Column({ type: 'varchar', length: 255 })
   name: string;
+
+  @ApiProperty({ description: 'Stat name short name' })
+  @Column({ type: 'varchar', length: 3 })
+  short_name: string;
 
   @ApiProperty({ description: 'Stat description', required: false })
   @Column({ type: 'text', nullable: true })
   description: string | null;
 
   @ApiProperty({ description: 'Hidden from non-owners', default: false })
-  @Index()
   @Column({ type: 'boolean', default: false })
   is_hidden: boolean;
 
