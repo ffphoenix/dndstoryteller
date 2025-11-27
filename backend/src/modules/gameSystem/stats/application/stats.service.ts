@@ -24,7 +24,7 @@ export class StatsService {
   }
 
   async create(dto: CreateStatDto, systemId: number): Promise<Stat> {
-    if (dto.system_id !== systemId) throw new ForbiddenException('System ID mismatch');
+    if (dto.systemId !== systemId) throw new ForbiddenException('System ID mismatch');
     return this.repo.createAndSave(dto);
   }
 
@@ -33,7 +33,7 @@ export class StatsService {
     if (!existing) throw new NotFoundException('Stat not found');
 
     // Prevent moving to another system by non-owner; even owner we restrict to same system for simplicity
-    if (dto.system_id && dto.system_id !== existing.system_id) {
+    if (dto.systemId && dto.systemId !== existing.systemId) {
       throw new ForbiddenException('Only owner can move stat to target system');
     }
 

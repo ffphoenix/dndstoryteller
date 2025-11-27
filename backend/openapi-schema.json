@@ -1064,7 +1064,7 @@
             "type": "string",
             "description": "Stat name"
           },
-          "short_name": {
+          "shortName": {
             "type": "string",
             "description": "Stat name short name"
           },
@@ -1072,12 +1072,16 @@
             "type": "string",
             "description": "Stat description"
           },
-          "is_hidden": {
+          "isHidden": {
             "type": "boolean",
             "description": "Hidden from non-owners",
             "default": false
           },
-          "system_id": {
+          "order": {
+            "type": "number",
+            "description": "Order of appearance in the stats list"
+          },
+          "systemId": {
             "type": "number",
             "description": "Related system id"
           }
@@ -1085,9 +1089,10 @@
         "required": [
           "id",
           "name",
-          "short_name",
-          "is_hidden",
-          "system_id"
+          "shortName",
+          "isHidden",
+          "order",
+          "systemId"
         ]
       },
       "CreateStatDto": {
@@ -1101,19 +1106,19 @@
             "type": "string",
             "description": "Stat description"
           },
-          "is_hidden": {
+          "isHidden": {
             "type": "boolean",
             "description": "Hidden from non-owners",
             "default": false
           },
-          "system_id": {
+          "systemId": {
             "type": "number",
             "description": "Related system id"
           }
         },
         "required": [
           "name",
-          "system_id"
+          "systemId"
         ]
       },
       "UpdateStatDto": {
@@ -1127,12 +1132,12 @@
             "type": "string",
             "description": "Stat description"
           },
-          "is_hidden": {
+          "isHidden": {
             "type": "boolean",
             "description": "Hidden from non-owners",
             "default": false
           },
-          "system_id": {
+          "systemId": {
             "type": "number",
             "description": "Related system id"
           }

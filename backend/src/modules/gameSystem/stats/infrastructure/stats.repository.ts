@@ -16,15 +16,15 @@ export class StatsRepository {
   }
 
   findOneById(id: number, systemId?: number): Promise<Stat | null> {
-    return this.repo.findOne({ where: { id, system_id: systemId } });
+    return this.repo.findOne({ where: { id, systemId: systemId } });
   }
 
   findAllBySystem(systemId: number): Promise<Stat[]> {
-    return this.repo.find({ where: { system_id: systemId }, order: { id: 'DESC' } });
+    return this.repo.find({ where: { systemId: systemId }, order: { id: 'DESC' } });
   }
 
   findVisibleBySystem(systemId: number): Promise<Stat[]> {
-    return this.repo.find({ where: { system_id: systemId, is_hidden: false }, order: { id: 'DESC' } });
+    return this.repo.find({ where: { systemId: systemId, isHidden: false }, order: { id: 'DESC' } });
   }
 
   async updateById(id: number, data: Partial<Stat>): Promise<Stat | null> {

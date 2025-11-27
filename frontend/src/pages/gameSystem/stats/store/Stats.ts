@@ -5,6 +5,7 @@ const getDefaultStat = () => ({
   id: 0,
   system_id: 0,
   name: "",
+  short_name: "",
   description: "",
   is_hidden: false,
 });

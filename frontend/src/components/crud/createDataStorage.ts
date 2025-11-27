@@ -39,7 +39,7 @@ export default <dataType>(defaultCurrent: () => dataType) => {
     get isPopupVisible(): boolean {
       return this.formUI.showPopup;
     },
-    clearFormData() {
+    resetCurrent() {
       this.clearFormErrors();
       this.current = defaultCurrent();
     },

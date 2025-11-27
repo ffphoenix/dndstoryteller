@@ -14,7 +14,7 @@ export class Stat {
 
   @ApiProperty({ description: 'Stat name short name' })
   @Column({ type: 'varchar', length: 3 })
-  short_name: string;
+  shortName: string;
 
   @ApiProperty({ description: 'Stat description', required: false })
   @Column({ type: 'text', nullable: true })
@@ -22,13 +22,15 @@ export class Stat {
 
   @ApiProperty({ description: 'Hidden from non-owners', default: false })
   @Column({ type: 'boolean', default: false })
-  is_hidden: boolean;
+  isHidden: boolean;
 
-  @ApiProperty({ description: 'Related system id' })
-  @Index()
-  @Column({ type: 'int' })
-  system_id: number;
+  @ApiProperty({ description: 'Order of appearance in the stats list' })
+  @Column({ type: 'smallint', default: '0' })
+  order: number;
 
   @ManyToOne(() => System, { onDelete: 'CASCADE' })
   system?: System;
+
+  @ApiProperty({ description: 'Related system id' })
+  systemId: number;
 }

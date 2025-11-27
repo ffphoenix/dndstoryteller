@@ -8,10 +8,12 @@ import notEmpty from "../../../components/crud/form/validators/notEmpty";
 import maxLength from "../../../components/crud/form/validators/maxLength";
 import minLength from "../../../components/crud/form/validators/minLength";
 import type { FormConfig } from "../../../components/crud/form/crudForm";
+import { useParams } from "react-router";
 
 export default observer(() => {
+  const param = useParams();
   const formConfig: FormConfig = {
-    onSubmit: () => saveCurrent(),
+    onSubmit: () => saveCurrent(parseInt(param?.systemId ?? "")),
     fields: [
       {
         type: "text",
@@ -21,9 +23,15 @@ export default observer(() => {
       },
       {
         type: "text",
+        label: "Short Name",
+        dataKey: "short_name",
+        validators: [notEmpty(), maxLength(3)],
+      },
+      {
+        type: "text",
         label: "Description",
         dataKey: "description",
-        validators: [minLength(3), maxLength(50)],
+        validators: [minLength(3), maxLength(255)],
       },
       {
         type: "switch",

@@ -172,15 +172,19 @@ export interface Stat {
   id: number;
   /** Stat name */
   name: string;
+  /** Stat name short name */
+  shortName: string;
   /** Stat description */
   description?: string;
   /**
    * Hidden from non-owners
    * @default false
    */
-  is_hidden: boolean;
+  isHidden: boolean;
+  /** Order of appearance in the stats list */
+  order: number;
   /** Related system id */
-  system_id: number;
+  systemId: number;
 }
 
 export interface CreateStatDto {
@@ -192,9 +196,9 @@ export interface CreateStatDto {
    * Hidden from non-owners
    * @default false
    */
-  is_hidden?: boolean;
+  isHidden?: boolean;
   /** Related system id */
-  system_id: number;
+  systemId: number;
 }
 
 export interface UpdateStatDto {
@@ -206,9 +210,9 @@ export interface UpdateStatDto {
    * Hidden from non-owners
    * @default false
    */
-  is_hidden?: boolean;
+  isHidden?: boolean;
   /** Related system id */
-  system_id?: number;
+  systemId?: number;
 }
 
 import type {

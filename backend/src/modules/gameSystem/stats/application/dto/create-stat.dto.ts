@@ -16,9 +16,9 @@ export class CreateStatDto {
   @ApiPropertyOptional({ description: 'Hidden from non-owners', default: false })
   @IsOptional()
   @IsBoolean()
-  is_hidden?: boolean;
+  isHidden?: boolean;
 
   @ApiProperty({ description: 'Related system id' })
   @IsInt()
-  system_id: number;
+  systemId: number;
 }
