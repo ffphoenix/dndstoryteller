@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import { useSidebar } from "../sidebar/context/SidebarContext";
 import { ThemeToggleButton } from "../common/ThemeToggleButton";
 import UserDropdown from "./UserDropdown";
-import SelectedGameSystem from "./SelectedGameSystem";
 
 const Header: React.FC = () => {
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
@@ -50,7 +49,6 @@ const Header: React.FC = () => {
             <img className="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
             <img className="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" />
           </Link>
-          <SelectedGameSystem />
           {/*<Search />*/}
 
           <div className="flex gap-2 2xsm:gap-3 ml-auto">

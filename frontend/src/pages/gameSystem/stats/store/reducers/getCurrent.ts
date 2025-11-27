@@ -1,3 +1,3 @@
-import Storage from "../Stats";
+import DataStorage from "../Stats";
 
-export default () => Storage.current;
+export default () => DataStorage.current;

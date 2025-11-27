@@ -1,7 +1,7 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { observer } from "mobx-react-lite";
-import Storage from "./store/Stats";
+import DataStorage from "./store/Stats";
 
 const dataTableConfig = [
   { header: "ID", key: "id", data: "id", sortable: true },
@@ -12,7 +12,7 @@ const dataTableConfig = [
 export default observer(() => {
   return (
     <div>
-      <DataTable value={Storage.list} size={"small"} onSort={(e) => console.log(e)}>
+      <DataTable value={DataStorage.list} size={"small"} onSort={(e) => console.log(e)}>
         {dataTableConfig.map((column) => (
           <Column key={column.key} field={column.data} header={column.header} sortable={column?.sortable ?? false} />
         ))}
