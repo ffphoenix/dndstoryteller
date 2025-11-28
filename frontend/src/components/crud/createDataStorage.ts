@@ -19,7 +19,7 @@ export type DataStorage<dataType> = {
   clearFormErrors: () => void;
   clearFormErrorsByKey: (key: string) => void;
   isFormValid: boolean;
-  clearFormData: () => void;
+  resetCurrent: () => void;
 };
 
 export default <dataType>(defaultCurrent: () => dataType) => {

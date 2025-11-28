@@ -17,7 +17,7 @@ export class SystemsRepository {
 
   findPublicOrOwned(userId?: number): Promise<System[]> {
     return this.repo.find({
-      where: [{ is_public: true }, { user_id: userId }],
+      where: [{ isPublic: true }, { userId: userId }],
       order: { id: 'DESC' },
     });
   }

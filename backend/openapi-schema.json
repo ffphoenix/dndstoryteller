@@ -984,25 +984,25 @@
             "type": "string",
             "description": "System description"
           },
-          "user_id": {
-            "type": "number",
-            "description": "Owner user id"
-          },
-          "is_public": {
+          "isPublic": {
             "type": "boolean",
             "description": "Is system public",
             "default": false
           },
-          "image_url": {
+          "imageUrl": {
             "type": "string",
             "description": "Image URL"
+          },
+          "userId": {
+            "type": "number",
+            "description": "Owner user id"
           }
         },
         "required": [
           "id",
           "name",
-          "user_id",
-          "is_public"
+          "isPublic",
+          "userId"
         ]
       },
       "CreateSystemDto": {
@@ -1017,7 +1017,7 @@
             "type": "string",
             "description": "System description"
           },
-          "is_public": {
+          "isPublic": {
             "type": "boolean",
             "description": "Public visibility",
             "default": false
@@ -1043,7 +1043,7 @@
             "type": "string",
             "description": "System description"
           },
-          "is_public": {
+          "isPublic": {
             "type": "boolean",
             "description": "Public visibility",
             "default": false

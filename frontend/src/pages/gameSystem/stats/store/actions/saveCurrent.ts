@@ -8,7 +8,7 @@ import fetchList from "./fetchList";
 export default (systemId: number) => {
   const current = {
     ...DataStorage.current,
-    system_id: systemId,
+    systemId,
   };
 
   const updateStorage = (response: AxiosResponse<Stat>) => {
@@ -19,7 +19,7 @@ export default (systemId: number) => {
       DataStorage.togglePopup();
       DataStorage.formUI.isLoading = false;
     });
-    fetchList(response.data.system_id);
+    fetchList(response.data.systemId);
   };
 
   runInAction(() => (DataStorage.formUI.isLoading = true));

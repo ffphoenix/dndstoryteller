@@ -9,6 +9,6 @@ export class SystemOwnerGuard implements CanActivate {
     const user = request.user;
     const systemId = request.params.systemId;
     const system = await this.systemsRepository.findOneById(systemId);
-    return system.user_id === user.id;
+    return system.userId === user.id;
   }
 }

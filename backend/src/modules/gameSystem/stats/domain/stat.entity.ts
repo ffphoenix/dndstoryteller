@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ForeignKey, PrimaryGeneratedColumn } from 'typeorm';
 import { System } from '../../systems/domain/system.entity';
 
 @Entity({ name: 'stats' })
@@ -28,9 +28,8 @@ export class Stat {
   @Column({ type: 'smallint', default: '0' })
   order: number;
 
-  @ManyToOne(() => System, { onDelete: 'CASCADE' })
-  system?: System;
-
   @ApiProperty({ description: 'Related system id' })
+  @Column({ type: 'integer', nullable: false })
+  @ForeignKey(() => System)
   systemId: number;
 }

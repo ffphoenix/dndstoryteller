@@ -9,6 +9,6 @@ export class SystemAccessibleGuard implements CanActivate {
     const user = request.user;
     const systemId = request.params.systemId;
     const system = await this.systemsRepository.findOneById(systemId);
-    return system.is_public || system.user_id === user.id;
+    return system.isPublic || system.userId === user.id;
   }
 }

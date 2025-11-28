@@ -16,7 +16,7 @@ export class CreateSystemDto {
   @ApiProperty({ description: 'Public visibility', default: false, required: false })
   @IsOptional()
   @IsBoolean()
-  is_public?: boolean;
+  isPublic?: boolean;
 
   @ApiProperty({ description: 'Image URL', required: false })
   @IsOptional()

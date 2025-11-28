@@ -3,11 +3,12 @@ import createDataStorage from "../../../../components/crud/createDataStorage";
 
 const getDefaultStat = () => ({
   id: 0,
-  system_id: 0,
+  systemId: 0,
   name: "",
-  short_name: "",
+  shortName: "",
   description: "",
-  is_hidden: false,
+  isHidden: false,
+  order: 0,
 });
 const StatsStorage = createDataStorage<Stat>(getDefaultStat);
 

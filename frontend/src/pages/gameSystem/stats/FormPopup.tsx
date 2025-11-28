@@ -24,7 +24,7 @@ export default observer(() => {
       {
         type: "text",
         label: "Short Name",
-        dataKey: "short_name",
+        dataKey: "shortName",
         validators: [notEmpty(), maxLength(3)],
       },
       {
@@ -36,7 +36,7 @@ export default observer(() => {
       {
         type: "switch",
         label: "Is Hidden?",
-        dataKey: "is_hidden",
+        dataKey: "isHidden",
       },
     ],
   };
