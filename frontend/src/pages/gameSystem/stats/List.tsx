@@ -6,7 +6,7 @@ import openPopupForEdit from "./store/actions/openPopupForEdit";
 import { useSystemIdParam } from "../hooks/useSystemIdParam";
 
 const dataTableConfig = [
-  { header: "Short Name", key: "short_name", data: "short_name" },
+  { header: "Short Name", key: "shortName", data: "shortName" },
   { header: "Name", key: "name", data: "name" },
   { header: "Description", key: "description", data: "description" },
 ];

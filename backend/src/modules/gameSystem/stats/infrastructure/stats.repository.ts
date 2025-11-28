@@ -20,7 +20,7 @@ export class StatsRepository {
   }
 
   findAllBySystem(systemId: number): Promise<Stat[]> {
-    return this.repo.find({ where: { systemId: systemId }, order: { id: 'DESC' } });
+    return this.repo.find({ where: { systemId: systemId }, order: { displayOrder: 'ASC' } });
   }
 
   findVisibleBySystem(systemId: number): Promise<Stat[]> {

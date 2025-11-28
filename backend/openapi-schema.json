@@ -1077,7 +1077,7 @@
             "description": "Hidden from non-owners",
             "default": false
           },
-          "order": {
+          "displayOrder": {
             "type": "number",
             "description": "Order of appearance in the stats list"
           },
@@ -1091,7 +1091,7 @@
           "name",
           "shortName",
           "isHidden",
-          "order",
+          "displayOrder",
           "systemId"
         ]
       },

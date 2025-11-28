@@ -8,7 +8,7 @@ const getDefaultStat = () => ({
   shortName: "",
   description: "",
   isHidden: false,
-  order: 0,
+  displayOrder: 0,
 });
 const StatsStorage = createDataStorage<Stat>(getDefaultStat);
 

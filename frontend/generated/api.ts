@@ -123,15 +123,15 @@ export interface System {
   name: string;
   /** System description */
   description?: string;
-  /** Owner user id */
-  user_id: number;
   /**
    * Is system public
    * @default false
    */
-  is_public: boolean;
+  isPublic: boolean;
   /** Image URL */
-  image_url?: string;
+  imageUrl?: string;
+  /** Owner user id */
+  userId: number;
 }
 
 export interface CreateSystemDto {
@@ -146,7 +146,7 @@ export interface CreateSystemDto {
    * Public visibility
    * @default false
    */
-  is_public?: boolean;
+  isPublic?: boolean;
   /** Image URL */
   image_url?: string;
 }
@@ -163,7 +163,7 @@ export interface UpdateSystemDto {
    * Public visibility
    * @default false
    */
-  is_public?: boolean;
+  isPublic?: boolean;
   /** Image URL */
   image_url?: string;
 }
@@ -182,7 +182,7 @@ export interface Stat {
    */
   isHidden: boolean;
   /** Order of appearance in the stats list */
-  order: number;
+  displayOrder: number;
   /** Related system id */
   systemId: number;
 }

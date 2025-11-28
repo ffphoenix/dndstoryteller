@@ -26,7 +26,7 @@ export class Stat {
 
   @ApiProperty({ description: 'Order of appearance in the stats list' })
   @Column({ type: 'smallint', default: '0' })
-  order: number;
+  displayOrder: number;
 
   @ApiProperty({ description: 'Related system id' })
   @Column({ type: 'integer', nullable: false })
