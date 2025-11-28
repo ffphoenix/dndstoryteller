@@ -5,8 +5,8 @@ import { StatsService } from '../application/stats.service';
 import { CreateStatDto } from '../application/dto/create-stat.dto';
 import { UpdateStatDto } from '../application/dto/update-stat.dto';
 import { Stat } from '../domain/stat.entity';
-import { SystemAccessibleGuard } from '../../systems/application/guards/system.accessible.guard';
-import { SystemOwnerGuard } from '../../systems/application/guards/system.owner.guard';
+import { SystemAccessibleGuard } from '../../shared/application/guards/system.accessible.guard';
+import { SystemOwnerGuard } from '../../shared/application/guards/system.owner.guard';
 
 @ApiTags('stats')
 @UseGuards(JwtAuthGuard)

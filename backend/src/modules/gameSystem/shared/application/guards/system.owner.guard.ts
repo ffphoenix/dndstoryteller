@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { SystemsRepository } from '../../infrastracture/system.repository';
+import { SystemsRepository } from '../../../systems/infrastracture/system.repository';
 
 @Injectable()
 export class SystemOwnerGuard implements CanActivate {
