@@ -1,12 +1,10 @@
-import ApiClient from "../../../../../utils/apiClient";
-import { runInAction } from "mobx";
 import SystemsStorage from "../Systems";
+import setCurrent from "./setCurrent";
+import { runInAction } from "mobx";
 
-export default (id: number) => {
-  ApiClient.systems.getOne(id).then((response) => {
-    runInAction(() => {
-      SystemsStorage.current = response.data;
-      SystemsStorage.togglePopup();
-    });
+export default async (id: number) => {
+  await setCurrent(id);
+  runInAction(() => {
+    SystemsStorage.togglePopup();
   });
 };

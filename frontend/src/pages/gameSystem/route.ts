@@ -1,10 +1,10 @@
 import System from "./systems";
 import type { RouteObject } from "react-router";
 import fetchList from "./systems/store/actions/fetchList";
-import selectSystem from "../../globalStore/selectedSystem/actions/selectSystem";
 import SystemDetails from "./SystemDetails";
 import Navigation from "./Navigation";
 import statsRoute from "./stats/route";
+import setCurrent from "./systems/store/actions/setCurrent";
 
 const gameSystemRouter: RouteObject = {
   loader: () => {
@@ -18,7 +18,7 @@ const gameSystemRouter: RouteObject = {
       Component: SystemDetails,
       loader: async ({ params }) => {
         if (!params?.systemId) return;
-        selectSystem(+params?.systemId);
+        await setCurrent(+params?.systemId);
       },
       children: [{ index: true, Component: Navigation }, statsRoute],
     },

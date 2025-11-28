@@ -1,7 +1,7 @@
 import { Card } from "primereact/card";
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Outlet, useLocation, useParams } from "react-router";
-import SelectedSystem from "../../globalStore/selectedSystem/SelectedSystem";
+import getCurrent from "./systems/store/reducers/getCurrent";
 
 export default () => {
   const params = useParams();
@@ -9,7 +9,7 @@ export default () => {
 
   const items = [
     { label: "Systems", url: "/systems" },
-    { label: SelectedSystem.name, url: `/systems/${params.systemId || ""}` },
+    { label: getCurrent().name, url: `/systems/${params.systemId || ""}` },
   ];
 
   if (params.systemId && `/systems/${params.systemId || ""}/`.length < location.pathname.length) {
