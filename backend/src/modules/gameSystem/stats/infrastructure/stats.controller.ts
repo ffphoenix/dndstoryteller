@@ -49,7 +49,7 @@ class StatsController {
     @Param('systemId', ParseIntPipe) systemId: number,
     @Body() dto: UpdateStatDto,
   ): Promise<Stat> {
-    return this.statsService.update(id, dto);
+    return this.statsService.update(id, systemId, dto);
   }
 
   @Delete(':id')
@@ -57,7 +57,7 @@ class StatsController {
   @UseGuards(SystemOwnerGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', ParseIntPipe) id: number, @Param('systemId', ParseIntPipe) systemId: number): Promise<void> {
-    return this.statsService.remove(id);
+    return this.statsService.remove(id, systemId);
   }
 }
 

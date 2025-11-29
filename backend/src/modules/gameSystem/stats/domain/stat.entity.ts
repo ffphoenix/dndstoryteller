@@ -2,8 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, ForeignKey, PrimaryGeneratedColumn } from 'typeorm';
 import { System } from '../../systems/domain/system.entity';
 
-@Entity({ name: 'stats' })
+@Entity({ name: 'system_stats' })
 export class Stat {
+  tableName = '';
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;

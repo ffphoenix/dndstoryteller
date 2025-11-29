@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SystemsModule } from './modules/gameSystem/systems/systems.module';
 import { StatsModule } from './modules/gameSystem/stats/stats.module';
+import { SkillsModule } from './modules/gameSystem/skills/skills.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { StatsModule } from './modules/gameSystem/stats/stats.module';
     AuthModule,
     SystemsModule,
     StatsModule,
+    SkillsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

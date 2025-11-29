@@ -28,8 +28,8 @@ export class StatsService {
     return this.repo.createAndSave(dto);
   }
 
-  async update(id: number, dto: UpdateStatDto): Promise<Stat> {
-    const existing = await this.repo.findOneById(id);
+  async update(id: number, systemId: number, dto: UpdateStatDto): Promise<Stat> {
+    const existing = await this.repo.findOneById(id, systemId);
     if (!existing) throw new NotFoundException('Stat not found');
 
     // Prevent moving to another system by non-owner; even owner we restrict to same system for simplicity
@@ -41,8 +41,8 @@ export class StatsService {
     return updated as Stat;
   }
 
-  async remove(id: number): Promise<void> {
-    const existing = await this.repo.findOneById(id);
+  async remove(id: number, systemId: number): Promise<void> {
+    const existing = await this.repo.findOneById(id, systemId);
     if (!existing) throw new NotFoundException('Stat not found');
 
     await this.repo.removeById(id);

@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { OAuth2Client } from 'google-auth-library';
-import getEnvVariable from '../../utils/getEnvVariable';
 
 type GoogleProfile = {
   email: string;
@@ -83,7 +82,7 @@ export class AuthService {
 
   async validateGoogleToken(token: string): Promise<GoogleProfile> {
     try {
-      const client = new OAuth2Client(getEnvVariable('AUTH_GOOGLE_CLIENT_ID').toString());
+      const client = new OAuth2Client(this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'));
       const ticket = await client.verifyIdToken({
         idToken: token,
         audience: this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'),

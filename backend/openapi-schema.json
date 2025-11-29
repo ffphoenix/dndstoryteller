@@ -750,6 +750,205 @@
           "stats"
         ]
       }
+    },
+    "/api/systems/{systemId}/skills": {
+      "get": {
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Skill"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "skills"
+        ]
+      },
+      "post": {
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "skills"
+        ]
+      }
+    },
+    "/api/systems/{systemId}/skills/{id}": {
+      "get": {
+        "operationId": "getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "skills"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "skills"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "skills"
+        ]
+      }
     }
   },
   "info": {
@@ -1136,6 +1335,105 @@
             "type": "boolean",
             "description": "Hidden from non-owners",
             "default": false
+          },
+          "systemId": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        }
+      },
+      "Skill": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "description": "Skill name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Skill description"
+          },
+          "check": {
+            "type": "string",
+            "description": "What check is required"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action details"
+          },
+          "tryAgain": {
+            "type": "string",
+            "description": "Try again details"
+          },
+          "systemId": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "systemId"
+        ]
+      },
+      "CreateSkillDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Skill name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Skill description"
+          },
+          "check": {
+            "type": "string",
+            "description": "What check is required"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action details"
+          },
+          "tryAgain": {
+            "type": "string",
+            "description": "Try again details"
+          },
+          "systemId": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        },
+        "required": [
+          "name",
+          "systemId"
+        ]
+      },
+      "UpdateSkillDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Skill name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Skill description"
+          },
+          "check": {
+            "type": "string",
+            "description": "What check is required"
+          },
+          "action": {
+            "type": "string",
+            "description": "Action details"
+          },
+          "tryAgain": {
+            "type": "string",
+            "description": "Try again details"
           },
           "systemId": {
             "type": "number",
