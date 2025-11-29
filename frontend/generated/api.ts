@@ -215,6 +215,52 @@ export interface UpdateStatDto {
   systemId?: number;
 }
 
+export interface Skill {
+  id: number;
+  /** Skill name */
+  name: string;
+  /** Skill description */
+  description?: string;
+  /** What check is required */
+  check?: string;
+  /** Action details */
+  action?: string;
+  /** Try again details */
+  tryAgain?: string;
+  /** Related system id */
+  systemId: number;
+}
+
+export interface CreateSkillDto {
+  /** Skill name */
+  name: string;
+  /** Skill description */
+  description?: string;
+  /** What check is required */
+  check?: string;
+  /** Action details */
+  action?: string;
+  /** Try again details */
+  tryAgain?: string;
+  /** Related system id */
+  systemId: number;
+}
+
+export interface UpdateSkillDto {
+  /** Skill name */
+  name?: string;
+  /** Skill description */
+  description?: string;
+  /** What check is required */
+  check?: string;
+  /** Action details */
+  action?: string;
+  /** Try again details */
+  tryAgain?: string;
+  /** Related system id */
+  systemId?: number;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -702,6 +748,100 @@ export class Api<
     remove: (id: number, systemId: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/systems/${systemId}/stats/${id}`,
+        method: "DELETE",
+        secure: true,
+        ...params,
+      }),
+  };
+  skills = {
+    /**
+     * No description
+     *
+     * @tags skills
+     * @name List
+     * @request GET:/api/systems/{systemId}/skills
+     */
+    list: (systemId: number, params: RequestParams = {}) =>
+      this.request<Skill[], any>({
+        path: `/api/systems/${systemId}/skills`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags skills
+     * @name Create
+     * @request POST:/api/systems/{systemId}/skills
+     * @secure
+     */
+    create: (
+      systemId: number,
+      data: CreateSkillDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Skill, any>({
+        path: `/api/systems/${systemId}/skills`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags skills
+     * @name GetOne
+     * @request GET:/api/systems/{systemId}/skills/{id}
+     */
+    getOne: (id: number, systemId: number, params: RequestParams = {}) =>
+      this.request<Skill, any>({
+        path: `/api/systems/${systemId}/skills/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags skills
+     * @name Update
+     * @request PATCH:/api/systems/{systemId}/skills/{id}
+     * @secure
+     */
+    update: (
+      id: number,
+      systemId: number,
+      data: UpdateSkillDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Skill, any>({
+        path: `/api/systems/${systemId}/skills/${id}`,
+        method: "PATCH",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags skills
+     * @name Remove
+     * @request DELETE:/api/systems/{systemId}/skills/{id}
+     * @secure
+     */
+    remove: (id: number, systemId: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/systems/${systemId}/skills/${id}`,
         method: "DELETE",
         secure: true,
         ...params,

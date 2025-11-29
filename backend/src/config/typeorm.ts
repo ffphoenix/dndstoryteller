@@ -4,11 +4,11 @@ import getEnvVariable from '../utils/getEnvVariable';
 
 const config = {
   type: 'postgres',
-  host: getEnvVariable('POSTGRES_HOST').toString(),
-  port: Number(getEnvVariable('POSTGRES_PORT', 5432)),
-  username: getEnvVariable('POSTGRES_USER').toString(),
-  password: getEnvVariable('POSTGRES_PASSWORD').toString(),
-  database: getEnvVariable('POSTGRES_DATABASE').toString(),
+  host: getEnvVariable('POSTGRES_HOST'),
+  port: Number(getEnvVariable('POSTGRES_PORT', '5432')),
+  username: getEnvVariable('POSTGRES_USER'),
+  password: getEnvVariable('POSTGRES_PASSWORD'),
+  database: getEnvVariable('POSTGRES_DATABASE'),
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/migrations/*.js'],
   autoLoadEntities: true,

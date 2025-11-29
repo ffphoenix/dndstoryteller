@@ -4,6 +4,7 @@ import fetchList from "./systems/store/actions/fetchList";
 import SystemDetails from "./SystemDetails";
 import Navigation from "./Navigation";
 import statsRoute from "./stats/route";
+import skillsRoute from "./skills/route";
 import setCurrent from "./systems/store/actions/setCurrent";
 
 const gameSystemRouter: RouteObject = {
@@ -20,7 +21,7 @@ const gameSystemRouter: RouteObject = {
         if (!params?.systemId) return;
         await setCurrent(+params?.systemId);
       },
-      children: [{ index: true, Component: Navigation }, statsRoute],
+      children: [{ index: true, Component: Navigation }, statsRoute, skillsRoute],
     },
   ],
 };

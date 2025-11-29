@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import CustomInputSwitch from "./CustomInputSwitch";
 import type { FieldConfig } from "../crudForm";
 import type { InputError } from "../../createDataStorage";
+import CustomTextarea from "./CustomTextarea";
 
 type Props<T> = {
   fieldConfig: FieldConfig;
@@ -39,5 +40,8 @@ export default observer(<T,>({ ...fieldProps }: Props<T>) => {
     );
   }
   const textInputProps = filterTextInputProps<T>(fieldProps);
+  if (fieldProps.fieldConfig.type === "textarea") {
+    return <CustomTextarea<T> {...textInputProps} />;
+  }
   return <CustomInputText<T> {...textInputProps} />;
 });

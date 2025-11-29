@@ -1,6 +1,6 @@
-import DataStorage from "../Stats";
+import DataStorage from "../Skills";
 import setCurrent from "./setCurrent";
 
-export default (id: number, systemId: number) => {
+export default async (id: number, systemId: number) => {
   setCurrent(id, systemId).then(() => DataStorage.togglePopup());
 };

@@ -1,19 +1,19 @@
 import { Dialog } from "primereact/dialog";
 import { observer } from "mobx-react-lite";
-import type { Stat } from "../../../../generated/api";
-import DataStorage from "./store/Stats";
+import type { Skill } from "../../../../generated/api";
+import DataStorage from "./store/Skills";
 import saveCurrent from "./store/actions/saveCurrent";
 import CrudForm from "../../../components/crud/form/CrudForm";
 import notEmpty from "../../../components/crud/form/validators/notEmpty";
 import maxLength from "../../../components/crud/form/validators/maxLength";
 import minLength from "../../../components/crud/form/validators/minLength";
 import type { FormConfig } from "../../../components/crud/form/crudForm";
-import { useParams } from "react-router";
+import { useSystemIdParam } from "../hooks/useSystemIdParam";
 
 export default observer(() => {
-  const param = useParams();
+  const systemId = useSystemIdParam();
   const formConfig: FormConfig = {
-    onSubmit: () => saveCurrent(parseInt(param?.systemId ?? "")),
+    onSubmit: () => saveCurrent(systemId),
     fields: [
       {
         type: "text",
@@ -23,20 +23,27 @@ export default observer(() => {
       },
       {
         type: "text",
-        label: "Short Name",
-        dataKey: "shortName",
-        validators: [notEmpty(), maxLength(3)],
-      },
-      {
-        type: "text",
         label: "Description",
         dataKey: "description",
         validators: [minLength(3), maxLength(255)],
       },
       {
-        type: "switch",
-        label: "Is Hidden?",
-        dataKey: "isHidden",
+        type: "textarea",
+        label: "Check",
+        dataKey: "check",
+        validators: [],
+      },
+      {
+        type: "textarea",
+        label: "Action",
+        dataKey: "action",
+        validators: [],
+      },
+      {
+        type: "textarea",
+        label: "Try Again action (optional)",
+        dataKey: "tryAgain",
+        validators: [],
       },
     ],
   };
@@ -44,7 +51,7 @@ export default observer(() => {
   return (
     <div>
       <Dialog
-        header={DataStorage.isCurrentNew ? "Add Stat" : "Edit Stat"}
+        header={DataStorage.isCurrentNew ? "Add Skill" : "Edit Skill"}
         visible={DataStorage.isPopupVisible}
         maximizable
         style={{ width: "50vw" }}
@@ -53,7 +60,7 @@ export default observer(() => {
           DataStorage.togglePopup();
         }}
       >
-        <CrudForm<Stat> config={formConfig} storageData={DataStorage} />
+        <CrudForm<Skill> config={formConfig} storageData={DataStorage} />
       </Dialog>
     </div>
   );

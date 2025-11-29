@@ -3,7 +3,7 @@ import IndexComponent from "./index";
 import fetchDataList from "./store/actions/fetchList";
 
 export default {
-  path: "stats",
+  path: "skills",
   Component: IndexComponent,
   loader: ({ params }) => {
     if (!params?.systemId) return;
