@@ -31,7 +31,7 @@ export default <T,>({ ...props }: CustomInputTextProps<T>) => {
     invalid: isValid,
   };
   return (
-    <div className="flex-auto mb-2">
+    <div className="flex-auto mb-2" key={props.dataKey}>
       <label htmlFor={props.dataKey} className="font-bold block">
         {props.label}
       </label>

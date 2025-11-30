@@ -8,6 +8,7 @@ export type DataStorage<dataType> = {
   error: string | null;
   formUI: {
     errors: InputError[];
+    networkError: string | null;
     isLoading: boolean;
     showPopup: boolean;
   };
@@ -32,6 +33,7 @@ export default <dataType>(defaultCurrent: () => dataType) => {
     },
     formUI: {
       errors: [] as InputError[],
+      networkError: null,
       isLoading: false,
       showPopup: false,
     },

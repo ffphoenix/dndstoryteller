@@ -1,12 +1,11 @@
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import EntityPopup from "./FormPopup";
-import { observer } from "mobx-react-lite";
 import List from "./List";
 import { useNavigate } from "react-router";
 import openPopupForCreate from "./store/actions/openPopupForCreate";
 
-export default observer(() => {
+export default () => {
   const navigate = useNavigate();
   return (
     <Card>
@@ -18,4 +17,4 @@ export default observer(() => {
       <EntityPopup />
     </Card>
   );
-});
+};

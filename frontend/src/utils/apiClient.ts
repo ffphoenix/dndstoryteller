@@ -30,11 +30,12 @@ apiClient.instance.interceptors.request.use(
 apiClient.instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log("Unauthorized", error);
     if (error.response.status === 401) {
+      console.log("Unauthorized", error);
       deleteUserToken();
       redirect("/auth/login");
     }
+    return Promise.reject(error);
   },
 );
 export default apiClient;

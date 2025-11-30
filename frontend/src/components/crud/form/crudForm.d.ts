@@ -5,10 +5,11 @@ export type ValidationFunction = (value: string) => string | undefined;
 export type FieldConfig = {
   dataKey: string;
   label: string;
-  type?: "text" | "number" | "switch" | "textarea";
+  type: "text" | "number" | "switch" | "textarea";
   render?: () => React.ReactNode;
   validators?: ValidationFunction[];
   errors?: InputError[];
+  autoResize?: boolean;
 };
 
 export type FormConfig = {

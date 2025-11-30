@@ -246,6 +246,27 @@ export interface CreateSkillDto {
   systemId: number;
 }
 
+export interface FieldError {
+  /** Form field name */
+  field: string;
+  /** Form field error message */
+  message: string;
+}
+
+export interface CRUDErrorBadRequestResponse {
+  /** error status code */
+  statusCode: number;
+  /** error message */
+  message: string;
+  /** Error messages by fields */
+  errors: FieldError[];
+  /**
+   * timestamp
+   * @format date-time
+   */
+  timestamp: string;
+}
+
 export interface UpdateSkillDto {
   /** Skill name */
   name?: string;
@@ -782,7 +803,7 @@ export class Api<
       data: CreateSkillDto,
       params: RequestParams = {},
     ) =>
-      this.request<Skill, any>({
+      this.request<Skill, CRUDErrorBadRequestResponse>({
         path: `/api/systems/${systemId}/skills`,
         method: "POST",
         body: data,
@@ -821,7 +842,7 @@ export class Api<
       data: UpdateSkillDto,
       params: RequestParams = {},
     ) =>
-      this.request<Skill, any>({
+      this.request<Skill, CRUDErrorBadRequestResponse>({
         path: `/api/systems/${systemId}/skills/${id}`,
         method: "PATCH",
         body: data,

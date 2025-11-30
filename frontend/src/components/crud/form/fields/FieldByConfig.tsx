@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import CustomInputSwitch from "./CustomInputSwitch";
 import type { FieldConfig } from "../crudForm";
 import type { InputError } from "../../createDataStorage";
-import CustomTextarea from "./CustomTextarea";
+import CustomTextarea, { type CustomTextareaProps } from "./CustomTextarea";
 
 type Props<T> = {
   fieldConfig: FieldConfig;
@@ -28,20 +28,25 @@ function filterTextInputProps<T>(fieldProps: Props<T>): CustomInputTextProps<T> 
   };
 }
 
+function filterTextareaProps<T>(fieldProps: Props<T>): CustomTextareaProps<T> {
+  const props = filterTextInputProps<T>(fieldProps);
+  return { ...props, autoResize: fieldProps.fieldConfig.autoResize };
+}
+
 export default observer(<T,>({ ...fieldProps }: Props<T>) => {
-  if (fieldProps.fieldConfig.type === "switch") {
-    return (
+  const fieldsMap = {
+    switch: () => (
       <CustomInputSwitch<T>
         dataKey={fieldProps.fieldConfig.dataKey}
         label={fieldProps.fieldConfig.label}
         onChange={fieldProps.onChange}
         value={!!fieldProps.value}
       />
-    );
-  }
-  const textInputProps = filterTextInputProps<T>(fieldProps);
-  if (fieldProps.fieldConfig.type === "textarea") {
-    return <CustomTextarea<T> {...textInputProps} />;
-  }
-  return <CustomInputText<T> {...textInputProps} />;
+    ),
+    text: () => <CustomInputText<T> {...filterTextInputProps<T>(fieldProps)} />,
+    number: () => <CustomInputText<T> {...filterTextInputProps<T>(fieldProps)} />,
+    textarea: () => <CustomTextarea<T> {...filterTextareaProps<T>(fieldProps)} />,
+  };
+
+  return fieldsMap[fieldProps.fieldConfig.type]?.() ?? fieldsMap.text();
 });

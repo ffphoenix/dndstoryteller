@@ -1,22 +1,12 @@
 import React from "react";
-import type { InputError } from "../../createDataStorage";
 import { InputTextarea, type InputTextareaProps } from "primereact/inputtextarea";
+import type { CustomInputTextProps } from "./CustomInputText";
 
-export type CustomInputTextProps<T> = {
-  label: string;
-  dataKey: string;
-  onChange: (data: Partial<T>) => void;
-  onBlur?: () => void;
-  onFocus?: () => void;
-  errors?: InputError[];
-  value?: string;
-  type?: string;
-  placeholder?: string;
-  className?: string;
-  helpText?: string;
+export type CustomTextareaProps<T> = CustomInputTextProps<T> & {
+  autoResize?: boolean;
 };
 
-export default <T,>({ ...props }: CustomInputTextProps<T>) => {
+export default <T,>({ ...props }: CustomTextareaProps<T>) => {
   const customOnchange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     props.onChange({ [props.dataKey]: e.target.value } as Partial<T>);
   };
@@ -28,6 +18,7 @@ export default <T,>({ ...props }: CustomInputTextProps<T>) => {
     onBlur: props.onBlur,
     className: props.className ?? "w-full",
     invalid: isValid,
+    autoResize: props.autoResize ?? false, // @todo: currently not working, lead to dialog glitch
   };
   return (
     <div className="flex-auto mb-2">
