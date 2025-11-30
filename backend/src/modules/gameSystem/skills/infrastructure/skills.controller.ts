@@ -7,6 +7,7 @@ import { UpdateSkillDto } from '../application/dto/update-skill.dto';
 import { Skill } from '../domain/skill.entity';
 import { SystemAccessibleGuard } from '../../shared/application/guards/system.accessible.guard';
 import { SystemOwnerGuard } from '../../shared/application/guards/system.owner.guard';
+import { CRUDErrorBadRequestResponse } from '../../../../common/interfaces/formValidationExceptionResponse.interface';
 
 @ApiTags('skills')
 @UseGuards(JwtAuthGuard)
@@ -35,6 +36,7 @@ class SkillsController {
   @UseGuards(SystemOwnerGuard)
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: HttpStatus.CREATED, type: Skill })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: CRUDErrorBadRequestResponse })
   async create(@Body() dto: CreateSkillDto, @Param('systemId', ParseIntPipe) systemId: number): Promise<Skill> {
     return this.skillsService.create(dto, systemId);
   }
@@ -44,6 +46,7 @@ class SkillsController {
   @UseGuards(SystemOwnerGuard)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: HttpStatus.OK, type: Skill })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: CRUDErrorBadRequestResponse })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Param('systemId', ParseIntPipe) systemId: number,

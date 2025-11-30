@@ -1,9 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { INestApplication } from '@nestjs/common';
-import { writeFileSync } from 'fs';
 import * as process from 'node:process';
+import addValidationPipe from './extentions/addValidationPipe';
+import addOpenApi from './extentions/addOpenApi';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,23 +10,11 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:5173',
   });
-
+  addValidationPipe(app);
   if (process.env.APP_ENV === 'dev') {
-    setupOpenAPI(app);
+    addOpenApi(app);
   }
   await app.listen(3000);
 }
+
 bootstrap();
-
-function setupOpenAPI(app: INestApplication) {
-  const config = new DocumentBuilder().setTitle('API Documentation').setVersion('1.0').addTag('Api').build();
-
-  const options: SwaggerDocumentOptions = {
-    operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
-  };
-
-  const document = SwaggerModule.createDocument(app, config, options);
-  writeFileSync('./openapi-schema.json', JSON.stringify(document, null, 2));
-
-  SwaggerModule.setup('openapi', app, document, { useGlobalPrefix: true, raw: ['json'] });
-}
