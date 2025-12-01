@@ -969,6 +969,225 @@
           "skills"
         ]
       }
+    },
+    "/api/systems/{systemId}/spells": {
+      "get": {
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Spell"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "spells"
+        ]
+      },
+      "post": {
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSpellDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spell"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CRUDErrorBadRequestResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "spells"
+        ]
+      }
+    },
+    "/api/systems/{systemId}/spells/{id}": {
+      "get": {
+        "operationId": "getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spell"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "spells"
+        ]
+      },
+      "patch": {
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSpellDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spell"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CRUDErrorBadRequestResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "spells"
+        ]
+      },
+      "delete": {
+        "operationId": "remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "systemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "spells"
+        ]
+      }
     }
   },
   "info": {
@@ -1502,6 +1721,129 @@
           "tryAgain": {
             "type": "string",
             "description": "Try again details"
+          },
+          "systemId": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        }
+      },
+      "Spell": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "description": "Spell name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Spell description"
+          },
+          "school": {
+            "type": "string",
+            "description": "Magic school"
+          },
+          "subschool": {
+            "type": "string",
+            "description": "Magic subschool"
+          },
+          "level": {
+            "type": "string",
+            "description": "Spell level"
+          },
+          "range": {
+            "type": "string",
+            "description": "Spell range"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Spell duration"
+          },
+          "systemId": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "systemId"
+        ]
+      },
+      "CreateSpellDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Spell name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Spell description"
+          },
+          "school": {
+            "type": "string",
+            "description": "Magic school"
+          },
+          "subschool": {
+            "type": "string",
+            "description": "Magic subschool"
+          },
+          "level": {
+            "type": "string",
+            "description": "Spell level"
+          },
+          "range": {
+            "type": "string",
+            "description": "Spell range"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Spell duration"
+          },
+          "systemId": {
+            "type": "number",
+            "description": "Related system id"
+          }
+        },
+        "required": [
+          "name",
+          "systemId"
+        ]
+      },
+      "UpdateSpellDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Spell name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Spell description"
+          },
+          "school": {
+            "type": "string",
+            "description": "Magic school"
+          },
+          "subschool": {
+            "type": "string",
+            "description": "Magic subschool"
+          },
+          "level": {
+            "type": "string",
+            "description": "Spell level"
+          },
+          "range": {
+            "type": "string",
+            "description": "Spell range"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Spell duration"
           },
           "systemId": {
             "type": "number",

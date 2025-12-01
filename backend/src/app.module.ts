@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SystemsModule } from './modules/gameSystem/systems/systems.module';
 import { StatsModule } from './modules/gameSystem/stats/stats.module';
 import { SkillsModule } from './modules/gameSystem/skills/skills.module';
+import { SpellsModule } from './modules/gameSystem/spells/spells.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SkillsModule } from './modules/gameSystem/skills/skills.module';
     SystemsModule,
     StatsModule,
     SkillsModule,
+    SpellsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

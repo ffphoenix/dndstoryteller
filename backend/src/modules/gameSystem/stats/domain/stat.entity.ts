@@ -4,7 +4,6 @@ import { System } from '../../systems/domain/system.entity';
 
 @Entity({ name: 'system_stats' })
 export class Stat {
-  tableName = '';
   @PrimaryGeneratedColumn()
   @ApiProperty()
   id: number;
