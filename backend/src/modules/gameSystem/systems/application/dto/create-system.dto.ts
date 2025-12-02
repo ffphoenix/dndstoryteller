@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
 
 export class CreateSystemDto {
-  @ApiProperty({ description: 'System name', example: 'Home made DnD System 5e' })
+  @ApiProperty({ description: 'System name', example: 'Home made DnD System' })
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)

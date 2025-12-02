@@ -1449,7 +1449,7 @@
           "name": {
             "type": "string",
             "description": "System name",
-            "example": "Home made DnD System 5e"
+            "example": "Home made DnD System"
           },
           "description": {
             "type": "string",
@@ -1475,7 +1475,7 @@
           "name": {
             "type": "string",
             "description": "System name",
-            "example": "Home made DnD System 5e"
+            "example": "Home made DnD System"
           },
           "description": {
             "type": "string",

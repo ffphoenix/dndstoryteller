@@ -8,6 +8,7 @@ export default () => {
       <Button label="Stats" onClick={() => navigate("stats")} />
       <Button label="Feats" onClick={() => navigate("feats")} />
       <Button label="Skills" onClick={() => navigate("skills")} />
+      <Button label="Spells" onClick={() => navigate("spells")} />
     </div>
   );
 };

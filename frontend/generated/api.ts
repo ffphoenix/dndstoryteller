@@ -137,7 +137,7 @@ export interface System {
 export interface CreateSystemDto {
   /**
    * System name
-   * @example "Home made DnD System 5e"
+   * @example "Home made DnD System"
    */
   name: string;
   /** System description */
@@ -154,7 +154,7 @@ export interface CreateSystemDto {
 export interface UpdateSystemDto {
   /**
    * System name
-   * @example "Home made DnD System 5e"
+   * @example "Home made DnD System"
    */
   name?: string;
   /** System description */
@@ -278,6 +278,64 @@ export interface UpdateSkillDto {
   action?: string;
   /** Try again details */
   tryAgain?: string;
+  /** Related system id */
+  systemId?: number;
+}
+
+export interface Spell {
+  id: number;
+  /** Spell name */
+  name: string;
+  /** Spell description */
+  description?: string;
+  /** Magic school */
+  school?: string;
+  /** Magic subschool */
+  subschool?: string;
+  /** Spell level */
+  level?: string;
+  /** Spell range */
+  range?: string;
+  /** Spell duration */
+  duration?: string;
+  /** Related system id */
+  systemId: number;
+}
+
+export interface CreateSpellDto {
+  /** Spell name */
+  name: string;
+  /** Spell description */
+  description?: string;
+  /** Magic school */
+  school?: string;
+  /** Magic subschool */
+  subschool?: string;
+  /** Spell level */
+  level?: string;
+  /** Spell range */
+  range?: string;
+  /** Spell duration */
+  duration?: string;
+  /** Related system id */
+  systemId: number;
+}
+
+export interface UpdateSpellDto {
+  /** Spell name */
+  name?: string;
+  /** Spell description */
+  description?: string;
+  /** Magic school */
+  school?: string;
+  /** Magic subschool */
+  subschool?: string;
+  /** Spell level */
+  level?: string;
+  /** Spell range */
+  range?: string;
+  /** Spell duration */
+  duration?: string;
   /** Related system id */
   systemId?: number;
 }
@@ -863,6 +921,100 @@ export class Api<
     remove: (id: number, systemId: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/api/systems/${systemId}/skills/${id}`,
+        method: "DELETE",
+        secure: true,
+        ...params,
+      }),
+  };
+  spells = {
+    /**
+     * No description
+     *
+     * @tags spells
+     * @name List
+     * @request GET:/api/systems/{systemId}/spells
+     */
+    list: (systemId: number, params: RequestParams = {}) =>
+      this.request<Spell[], any>({
+        path: `/api/systems/${systemId}/spells`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags spells
+     * @name Create
+     * @request POST:/api/systems/{systemId}/spells
+     * @secure
+     */
+    create: (
+      systemId: number,
+      data: CreateSpellDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Spell, CRUDErrorBadRequestResponse>({
+        path: `/api/systems/${systemId}/spells`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags spells
+     * @name GetOne
+     * @request GET:/api/systems/{systemId}/spells/{id}
+     */
+    getOne: (id: number, systemId: number, params: RequestParams = {}) =>
+      this.request<Spell, any>({
+        path: `/api/systems/${systemId}/spells/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags spells
+     * @name Update
+     * @request PATCH:/api/systems/{systemId}/spells/{id}
+     * @secure
+     */
+    update: (
+      id: number,
+      systemId: number,
+      data: UpdateSpellDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<Spell, CRUDErrorBadRequestResponse>({
+        path: `/api/systems/${systemId}/spells/${id}`,
+        method: "PATCH",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags spells
+     * @name Remove
+     * @request DELETE:/api/systems/{systemId}/spells/{id}
+     * @secure
+     */
+    remove: (id: number, systemId: number, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/systems/${systemId}/spells/${id}`,
         method: "DELETE",
         secure: true,
         ...params,
