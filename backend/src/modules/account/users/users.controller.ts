@@ -17,9 +17,9 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiResponse, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { ErrorResponse } from '../../common/interfaces/errorResponse.interface';
+import { ErrorResponse } from '../../../common/interfaces/errorResponse.interface';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { CurrentUser } from '../../common/decorators/user.decorator';
+import { CurrentUser } from '../../../common/decorators/user.decorator';
 
 @ApiTags('users')
 @Controller('users')

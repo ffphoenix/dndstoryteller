@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../account/auth/guards/jwt-auth.guard';
 import { StatsService } from '../application/stats.service';
 import { CreateStatDto } from '../application/dto/create-stat.dto';
 import { UpdateStatDto } from '../application/dto/update-stat.dto';

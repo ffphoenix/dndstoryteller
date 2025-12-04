@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../account/auth/guards/jwt-auth.guard';
 import { SpellsService } from '../application/spells.service';
 import { CreateSpellDto } from '../application/dto/create-spell.dto';
 import { UpdateSpellDto } from '../application/dto/update-spell.dto';

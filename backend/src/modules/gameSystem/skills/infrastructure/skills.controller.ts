@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../account/auth/guards/jwt-auth.guard';
 import { SkillsService } from '../application/skills.service';
 import { CreateSkillDto } from '../application/dto/create-skill.dto';
 import { UpdateSkillDto } from '../application/dto/update-skill.dto';
