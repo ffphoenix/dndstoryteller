@@ -1,15 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import LoginImage from "../../../assets/img/login-bg.jpeg";
 import { ReactComponent as GitIcon } from "../../../icons/github.svg?react";
 import Card from "../../../components/ui/structural/Card";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { observer } from "mobx-react-lite";
 import loginWithGoogle from "../../../globalStore/users/actions/loginWithGoogle";
-import { redirect } from "react-router";
+import { useNavigate } from "react-router";
 import { Button } from "primereact/button";
 
 export default observer(() => {
+  const navigate = useNavigate();
   return (
     <Card>
       <div className="h-32 md:h-auto md:w-1/2">
@@ -24,7 +23,7 @@ export default observer(() => {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-expect-error
                 await loginWithGoogle(credentialResponse);
-                redirect("/");
+                navigate("/");
               }}
               onError={() => {
                 console.log("Login Failed");

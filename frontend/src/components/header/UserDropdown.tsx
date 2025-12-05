@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { redirect } from "react-router";
+import { useNavigate } from "react-router";
 import getUserInfo from "../../globalStore/users/reducers/getUserInfo";
 import deleteUserToken from "../../utils/auth/deleteUserToken";
 import { observer } from "mobx-react-lite";
@@ -7,9 +7,10 @@ import { Menu } from "primereact/menu";
 import type { MenuItem } from "primereact/menuitem";
 
 export default observer(() => {
+  const navigate = useNavigate();
   function logout() {
     deleteUserToken();
-    redirect("/auth/login");
+    navigate("/auth/login");
   }
   const items: MenuItem[] = [
     {
@@ -19,6 +20,7 @@ export default observer(() => {
     {
       label: "Sign out",
       icon: "pi pi-sign-out",
+      command: logout,
     },
   ];
 

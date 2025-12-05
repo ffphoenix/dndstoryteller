@@ -2,11 +2,9 @@ import { Api } from "../../generated/api";
 import type { AxiosRequestConfig } from "axios";
 import getUserToken from "./auth/getUserToken";
 import deleteUserToken from "./auth/deleteUserToken";
-import { redirect } from "react-router";
 
 const apiClient = new Api({
   secure: false,
-  // @ts-ignore
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 5000, // 5 seconds
   headers: {
@@ -33,7 +31,10 @@ apiClient.instance.interceptors.response.use(
     if (error.response.status === 401) {
       console.log("Unauthorized", error);
       deleteUserToken();
-      redirect("/auth/login");
+      const loginURI = "/auth/login";
+      if (window.location.pathname !== loginURI) {
+        window.location.href = loginURI;
+      }
     }
     return Promise.reject(error);
   },
