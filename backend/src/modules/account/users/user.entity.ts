@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 export type AuthProvider = 'local' | 'google';
@@ -48,7 +48,13 @@ export class User {
   @Column({ type: 'varchar', default: 'local' })
   provider: AuthProvider;
 
-  @ApiProperty({ required: false })
-  @Column({ type: 'timestamp', nullable: true })
-  lastLoginAt: Date | null;
+  @ApiProperty()
+  @Column({ type: 'varchar', default: '' })
+  refreshToken: string;
+
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
+  public createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
+  public updatedAt: Date;
 }

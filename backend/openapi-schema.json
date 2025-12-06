@@ -363,7 +363,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GoogleAuthResponse"
+                  "$ref": "#/components/schemas/JwtTokensResponse"
                 }
               }
             }
@@ -390,6 +390,53 @@
           }
         },
         "summary": "Login with Google",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "operationId": "refresh",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Token refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtTokensResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid refresh token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Refresh access token",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "operationId": "logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Logged out"
+          }
+        },
+        "summary": "Logout (clear refresh token)",
         "tags": [
           "auth"
         ]
@@ -1295,14 +1342,14 @@
               "google"
             ]
           },
-          "lastLoginAt": {
-            "format": "date-time",
+          "refreshToken": {
             "type": "string"
           }
         },
         "required": [
           "email",
-          "role"
+          "role",
+          "refreshToken"
         ]
       },
       "ErrorResponse": {
@@ -1396,16 +1443,21 @@
           "credentialResponse"
         ]
       },
-      "GoogleAuthResponse": {
+      "JwtTokensResponse": {
         "type": "object",
         "properties": {
-          "access_token": {
+          "accessToken": {
             "type": "string",
-            "description": "access_token"
+            "description": "access token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "refresh token"
           }
         },
         "required": [
-          "access_token"
+          "accessToken",
+          "refreshToken"
         ]
       },
       "System": {

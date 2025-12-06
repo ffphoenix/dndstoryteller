@@ -4,6 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { OAuth2Client } from 'google-auth-library';
+import { TokenPayload } from './interfaces/token-payload.interface';
+import { type StringValue } from 'ms';
 
 type GoogleProfile = {
   email: string;
@@ -24,10 +26,6 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(email: string): Promise<User | null> {
-    return this.usersService.findByEmail(email);
-  }
-
   async findOrCreateUser(profile: GoogleProfile): Promise<User> {
     // Try find by googleId first if present, then by email
     let user: User | null = null;
@@ -37,8 +35,6 @@ export class AuthService {
     if (!user) {
       user = await this.usersService.findByEmail(profile.email);
     }
-
-    const now = new Date();
 
     if (!user) {
       // Create a new user if one doesn't exist
@@ -50,7 +46,6 @@ export class AuthService {
         provider: 'google',
         googleId: profile.googleId || profile.sub || null,
         pictureUrl: profile.picture || null,
-        lastLoginAt: now,
         isActive: true,
         role: 'user',
       });
@@ -62,22 +57,51 @@ export class AuthService {
         provider: 'google',
         googleId: user.googleId || profile.googleId || profile.sub || null,
         pictureUrl: profile.picture || user.pictureUrl || null,
-        lastLoginAt: now,
       });
     }
 
     return user;
   }
 
-  generateToken(user: User): { access_token: string } {
-    const payload = {
-      email: user.email,
-      sub: user.id,
-      provider: user.provider,
-    };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  generateAccessToken(user: User): string {
+    const payload: TokenPayload = { userId: user.id, email: user.email };
+    return this.jwtService.sign<TokenPayload>(payload, {
+      secret: this.configService.get<string>('JWT_SECRET', 'your-secret-key'),
+      expiresIn: this.configService.get<StringValue>('JWT_EXPIRES_IN', '60s'),
+    });
+  }
+
+  private createRefreshToken(user: User): string {
+    const payload: TokenPayload = { userId: user.id, email: user.email };
+    return this.jwtService.sign<TokenPayload>(payload, {
+      secret: this.configService.get<string>('JWT_REFRESH_TOKEN_SECRET', 'your-refresh-secret-key'),
+      expiresIn: this.configService.get<StringValue>('JWT_REFRESH_EXPIRES_IN', '7d'),
+    });
+  }
+
+  async issueTokens(user: User): Promise<{ accessToken: string; refreshToken: string }> {
+    const accessToken = this.generateAccessToken(user);
+    const refreshToken = this.createRefreshToken(user);
+    await this.usersService.update(user.id, { refreshToken: refreshToken });
+    return { accessToken, refreshToken };
+  }
+
+  async rotateTokens(userId: number): Promise<{ accessToken: string; refreshToken: string }> {
+    const user = await this.usersService.findOne(userId);
+    if (!user) {
+      return null;
+    }
+    const accessToken = this.generateAccessToken(user);
+    const refreshToken = this.createRefreshToken(user);
+    await this.usersService.update(user.id, { refreshToken: refreshToken });
+    return { accessToken, refreshToken };
+  }
+
+  async isUserRefreshTokenValid(incomingToken: string, userId: number): Promise<boolean> {
+    if (!incomingToken || !userId) return false;
+    const user = await this.usersService.findOne(userId);
+
+    return user?.refreshToken && user.refreshToken === incomingToken;
   }
 
   async validateGoogleToken(token: string): Promise<GoogleProfile> {
@@ -106,5 +130,11 @@ export class AuthService {
       console.error('Error validating Google token:', error);
       return null;
     }
+  }
+
+  async logout(userId: number): Promise<void> {
+    const user = await this.usersService.findOne(userId);
+    if (!user) return;
+    await this.usersService.update(user.id, { refreshToken: '' });
   }
 }
