@@ -3,16 +3,16 @@ import loginRoute from "../pages/auth/login/route";
 import GuestLayout from "../layouts/GuestLayout";
 import GameLayout from "../layouts/GameLayout";
 import { redirect, type RouteObject } from "react-router";
-import isUserAuthorised from "../utils/auth/isUserAuthorised";
 import Dashboard from "../pages/Dashboard";
 import gameSystemRouter from "../pages/gameSystem/route";
 import GamePage from "../pages/gameScene";
+import { isAuthenticated } from "../services/jwtAuth/tokensManagement";
 
 const routes: RouteObject[] = [
   {
     path: "/",
     loader() {
-      if (!isUserAuthorised()) {
+      if (!isAuthenticated()) {
         return redirect("/auth/login");
       }
       return null;
@@ -39,7 +39,7 @@ const routes: RouteObject[] = [
   {
     path: "auth",
     loader() {
-      if (isUserAuthorised()) {
+      if (isAuthenticated()) {
         return redirect("/");
       }
       return null;

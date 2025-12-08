@@ -1,1 +1,0 @@
-export default () => localStorage.removeItem("auth-token");

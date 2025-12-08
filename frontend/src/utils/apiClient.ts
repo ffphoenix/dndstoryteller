@@ -1,7 +1,7 @@
 import { Api } from "../../generated/api";
 import type { AxiosRequestConfig } from "axios";
-import getUserToken from "./auth/getUserToken";
-import deleteUserToken from "./auth/deleteUserToken";
+import createJwtAuthManager from "../services/jwtAuth/createJwtAuthorization";
+import { getRefreshToken } from "../services/jwtAuth/tokensManagement";
 
 const apiClient = new Api({
   secure: false,
@@ -12,31 +12,16 @@ const apiClient = new Api({
   },
 } as AxiosRequestConfig);
 
-apiClient.instance.interceptors.request.use(
-  (config) => {
-    const token = getUserToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
-
-apiClient.instance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response.status === 401) {
-      console.log("Unauthorized", error);
-      deleteUserToken();
-      const loginURI = "/auth/login";
-      if (window.location.pathname !== loginURI) {
-        window.location.href = loginURI;
-      }
-    }
-    return Promise.reject(error);
-  },
-);
+createJwtAuthManager({
+  clientType: "axios",
+  axiosInstance: apiClient.instance,
+  refreshInterval: 5 * 60,
+  refreshCallback: () =>
+    apiClient.auth.refresh({
+      headers: {
+        "x-refresh-token": getRefreshToken(),
+      },
+    }),
+  redirectURI: "/auth/login",
+});
 export default apiClient;

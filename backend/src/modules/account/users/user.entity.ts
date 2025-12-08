@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, Index, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 export type AuthProvider = 'local' | 'google';
 export type UserRole = 'admin' | 'user';
@@ -15,6 +16,7 @@ export class User {
   email: string;
 
   // Nullable for OAuth users
+  @Exclude()
   @ApiProperty({ required: false })
   @Column({ nullable: true })
   password: string | null;
@@ -48,13 +50,19 @@ export class User {
   @Column({ type: 'varchar', default: 'local' })
   provider: AuthProvider;
 
-  @ApiProperty()
+  @Exclude()
   @Column({ type: 'varchar', default: '' })
   refreshToken: string;
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })
   public createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)', onUpdate: 'CURRENT_TIMESTAMP(6)' })
   public updatedAt: Date;
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }

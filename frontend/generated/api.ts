@@ -55,8 +55,7 @@ export interface User {
   googleId?: string;
   pictureUrl?: string;
   provider?: "local" | "google";
-  /** @format date-time */
-  lastLoginAt?: string;
+  refreshToken: string;
 }
 
 export interface ErrorResponse {
@@ -112,9 +111,11 @@ export interface GoogleLoginDto {
   credentialResponse: CredentialResponseDto;
 }
 
-export interface GoogleAuthResponse {
-  /** access_token */
-  access_token: string;
+export interface JwtTokensResponse {
+  /** access token */
+  accessToken: string;
+  /** refresh token */
+  refreshToken: string;
 }
 
 export interface System {
@@ -644,12 +645,43 @@ export class Api<
      * @request POST:/api/auth/google/login
      */
     googleLogin: (data: GoogleLoginDto, params: RequestParams = {}) =>
-      this.request<GoogleAuthResponse, ErrorResponse>({
+      this.request<JwtTokensResponse, ErrorResponse>({
         path: `/api/auth/google/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name Refresh
+     * @summary Refresh access token
+     * @request POST:/api/auth/refresh
+     */
+    refresh: (params: RequestParams = {}) =>
+      this.request<JwtTokensResponse, ErrorResponse>({
+        path: `/api/auth/refresh`,
+        method: "POST",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags auth
+     * @name Logout
+     * @summary Logout (clear refresh token)
+     * @request POST:/api/auth/logout
+     */
+    logout: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/auth/logout`,
+        method: "POST",
         ...params,
       }),
   };

@@ -11,6 +11,8 @@ import {
   UseGuards,
   ParseIntPipe,
   NotFoundException,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
@@ -48,6 +50,7 @@ export class UsersController {
 
   @Get('me')
   @ApiBearerAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: HttpStatus.OK, description: 'Returns current authenticated user', type: User })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized', type: ErrorResponse })

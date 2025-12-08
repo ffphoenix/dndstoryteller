@@ -1341,15 +1341,11 @@
               "local",
               "google"
             ]
-          },
-          "refreshToken": {
-            "type": "string"
           }
         },
         "required": [
           "email",
-          "role",
-          "refreshToken"
+          "role"
         ]
       },
       "ErrorResponse": {
