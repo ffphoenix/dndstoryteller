@@ -1,6 +1,6 @@
-import { deleteTokens } from "../../../services/jwtAuth/tokensManagement";
+import { tokenManager } from "../../../utils/apiClient";
 
 export default () => {
-  deleteTokens();
+  tokenManager.deleteTokens();
   window.location.href = "/auth/login";
 };

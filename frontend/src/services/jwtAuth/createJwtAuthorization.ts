@@ -1,16 +1,15 @@
 import type { AxiosInstance, AxiosResponse } from "axios";
-import type { JwtTokens } from "./types";
+import type { JwtTokens, TokenManager } from "./types";
 import addAccessToken from "./axios/addAccessToken";
-import refreshOnWindowFocusFunc from "./axios/refreshOnWindowFocus";
-import refreshByInterval from "./axios/refreshByInterval";
-import refreshAfterExpireFunc from "./axios/refreshAfterExpire";
+import refreshAfterExpireFunc from "./axios/registerErrorInterceptor";
 
 //@todo implement retry refreshWhenHidden, retryOnFailure
 type configProps = {
-  clientType: "axios" | "fetch";
+  tokenManager: TokenManager;
+  clientType?: "axios" | "fetch";
   axiosInstance?: AxiosInstance;
   refreshAfterExpire?: boolean;
-  refreshInterval?: number;
+  tokenExpireTime?: number;
   refreshOnWindowFocus?: boolean;
   refreshBeforeExpire?: boolean;
   // refreshWhenHidden?: boolean;
@@ -22,11 +21,59 @@ type configProps = {
   redirectURI?: string;
 };
 
+let timeOutId: number = 0;
+const refreshTokenBeforeSeconds = 15;
+
+const calculateTimeToTokenExpire = (tokenManager: TokenManager, tokenExpireTime: number): number => {
+  const lastRefreshAt = tokenManager.getTokenRefreshedAt();
+  if (lastRefreshAt !== null) {
+    return tokenExpireTime * 1000 - (Date.now() - parseInt(lastRefreshAt));
+  }
+  return tokenExpireTime * 1000;
+};
+
+const initRefreshByInterval = (
+  refreshCallback: () => Promise<AxiosResponse<JwtTokens>>,
+  tokenManager: TokenManager,
+  tokenExpireTime = 60,
+) => {
+  const refreshTime = calculateTimeToTokenExpire(tokenManager, tokenExpireTime) - refreshTokenBeforeSeconds * 1000;
+  timeOutId = setTimeout(
+    async () => {
+      if (tokenManager.getRefreshToken() !== null) {
+        const response = await refreshCallback();
+        tokenManager.saveTokens(response.data);
+      }
+      initRefreshByInterval(refreshCallback, tokenManager, tokenExpireTime);
+    },
+    refreshTime > 0 ? refreshTime : 1000,
+  );
+};
+
+const initRefreshOnWindowFocus = (
+  refreshCallback: () => Promise<AxiosResponse<JwtTokens>>,
+  tokenManager: TokenManager,
+  tokenExpireTime: number,
+) => {
+  window.addEventListener("focus", async () => {
+    if (
+      tokenManager.getRefreshToken() !== null &&
+      calculateTimeToTokenExpire(tokenManager, tokenExpireTime) < refreshTokenBeforeSeconds
+    ) {
+      const response = await refreshCallback();
+      tokenManager.saveTokens(response.data);
+      clearTimeout(timeOutId);
+      initRefreshByInterval(refreshCallback, tokenManager, tokenExpireTime);
+    }
+  });
+};
+
 export default ({
-  clientType,
-  refreshAfterExpire = true,
+  tokenManager,
   axiosInstance,
-  refreshInterval = 60,
+  clientType = "axios",
+  refreshAfterExpire = true,
+  tokenExpireTime = 60,
   refreshOnWindowFocus = true,
   refreshBeforeExpire = true,
   refreshCallback,
@@ -36,17 +83,17 @@ export default ({
     if (axiosInstance === undefined) {
       throw new Error("axiosInstance is required for axios clientType");
     } else {
-      addAccessToken(axiosInstance);
-      if (refreshOnWindowFocus && refreshCallback !== undefined) {
-        refreshOnWindowFocusFunc(refreshCallback);
+      addAccessToken(axiosInstance, tokenManager);
+      if (refreshBeforeExpire && refreshCallback !== undefined) {
+        initRefreshByInterval(refreshCallback, tokenManager, tokenExpireTime);
       }
 
-      if (refreshBeforeExpire && refreshCallback !== undefined) {
-        refreshByInterval(refreshCallback, refreshInterval);
+      if (refreshOnWindowFocus && refreshCallback !== undefined) {
+        initRefreshOnWindowFocus(refreshCallback, tokenManager, tokenExpireTime);
       }
 
       if (refreshAfterExpire && refreshCallback !== undefined) {
-        refreshAfterExpireFunc(axiosInstance, { refreshCallback, redirectURI });
+        refreshAfterExpireFunc({ axiosInstance, refreshCallback, redirectURI, tokenManager });
       }
     }
 };

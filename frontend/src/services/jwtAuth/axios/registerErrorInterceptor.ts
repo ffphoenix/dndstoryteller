@@ -1,6 +1,5 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { deleteTokens, getAccessToken, getRefreshToken, saveTokens } from "../tokensManagement";
-import type { JwtTokens } from "../types";
+import type { JwtTokens, TokenManager } from "../types";
 
 type RetryQueue = {
   config: AxiosRequestConfig;
@@ -9,36 +8,30 @@ type RetryQueue = {
 }[];
 
 const retryQueue: RetryQueue = [];
-let isRefreshing = false;
-
-const logoutAndRedirect = (redirectURI: string) => {
-  deleteTokens();
-  if (window.location.pathname !== redirectURI) {
-    window.location.href = redirectURI;
-  }
-};
 
 type handleUnauthorizedErrorProps = {
-  instance: AxiosInstance;
+  axiosInstance: AxiosInstance;
   refreshCallback: () => Promise<AxiosResponse<JwtTokens>>;
   originalConfig: AxiosRequestConfig;
   redirectURI: string;
+  tokenManager: TokenManager;
 };
 const handleUnauthorizedError = async ({
   refreshCallback,
   originalConfig,
   redirectURI,
-  instance,
+  axiosInstance,
+  tokenManager,
 }: handleUnauthorizedErrorProps) => {
-  if (!isRefreshing) {
-    isRefreshing = true;
+  if (tokenManager.isRefreshing()) {
+    tokenManager.setRefreshing(true);
     try {
       // Refresh the access token
       const newAccessTokens = (await refreshCallback()).data;
-      saveTokens(newAccessTokens);
+      tokenManager.saveTokens(newAccessTokens);
 
       retryQueue.forEach(({ config, resolve, reject }) => {
-        instance
+        axiosInstance
           .request(config)
           .then((response) => {
             resolve(response);
@@ -48,14 +41,17 @@ const handleUnauthorizedError = async ({
 
       retryQueue.length = 0;
 
-      return instance(originalConfig);
+      return axiosInstance(originalConfig);
     } catch (refreshError) {
       retryQueue.length = 0;
-      logoutAndRedirect(redirectURI);
-      isRefreshing = false;
+      tokenManager.deleteTokens();
+      if (window.location.pathname !== redirectURI) {
+        window.location.href = redirectURI;
+      }
+      tokenManager.setRefreshing(false);
       return Promise.reject(refreshError);
     } finally {
-      isRefreshing = false;
+      tokenManager.setRefreshing(false);
     }
   }
 
@@ -64,24 +60,32 @@ const handleUnauthorizedError = async ({
   });
 };
 
-const isRetryableError = (error: AxiosError) => {
-  return getRefreshToken() !== null && getAccessToken() !== null && error.config && error.response?.status === 401;
+const isRetryableError = (error: AxiosError, tokenManager: TokenManager) => {
+  return (
+    tokenManager.getRefreshToken() !== null &&
+    tokenManager.getAccessToken() !== null &&
+    error.config &&
+    error.response?.status === 401
+  );
 };
 
-type configProps = {
+type Props = {
+  axiosInstance: AxiosInstance;
   redirectURI: string;
   refreshCallback: () => Promise<AxiosResponse<JwtTokens>>;
+  tokenManager: TokenManager;
 };
-export default (instance: AxiosInstance, config: configProps) => {
-  instance.interceptors.response.use(
+export default ({ axiosInstance, redirectURI, refreshCallback, tokenManager }: Props) => {
+  axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
-      if (isRetryableError(error)) {
+      if (isRetryableError(error, tokenManager)) {
         return handleUnauthorizedError({
-          instance,
+          axiosInstance,
           originalConfig: error.config,
-          refreshCallback: config.refreshCallback,
-          redirectURI: config.redirectURI,
+          refreshCallback: refreshCallback,
+          redirectURI: redirectURI,
+          tokenManager,
         });
       }
       return Promise.reject(error);

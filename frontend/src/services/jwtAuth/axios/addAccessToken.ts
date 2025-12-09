@@ -1,9 +1,9 @@
-import { getAccessToken } from "../tokensManagement";
 import type { AxiosInstance } from "axios";
+import type { TokenManager } from "../types";
 
-export default (instance: AxiosInstance) => {
+export default (instance: AxiosInstance, tokenManager: TokenManager) => {
   instance.interceptors.request.use((config) => {
-    const accessToken = getAccessToken();
+    const accessToken = tokenManager.getAccessToken();
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

@@ -1,7 +1,7 @@
 import { Api } from "../../generated/api";
 import type { AxiosRequestConfig } from "axios";
 import createJwtAuthManager from "../services/jwtAuth/createJwtAuthorization";
-import { getRefreshToken } from "../services/jwtAuth/tokensManagement";
+import createTokensManager from "../services/jwtAuth/createTokensManager";
 
 const apiClient = new Api({
   secure: false,
@@ -12,14 +12,17 @@ const apiClient = new Api({
   },
 } as AxiosRequestConfig);
 
+export const tokenManager = createTokensManager({});
+
 createJwtAuthManager({
-  clientType: "axios",
+  tokenManager,
   axiosInstance: apiClient.instance,
-  refreshInterval: 5 * 60,
+  tokenExpireTime: import.meta.env.VITE_JWT_EXPIRE_TIME,
   refreshCallback: () =>
     apiClient.auth.refresh({
       headers: {
-        "x-refresh-token": getRefreshToken(),
+        Authorization: `Bearer ${tokenManager.getRefreshToken()}`,
+        "x-refresh-token": tokenManager.getRefreshToken(),
       },
     }),
   redirectURI: "/auth/login",
