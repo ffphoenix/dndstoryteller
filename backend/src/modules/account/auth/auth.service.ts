@@ -105,31 +105,26 @@ export class AuthService {
   }
 
   async validateGoogleToken(token: string): Promise<GoogleProfile> {
-    try {
-      const client = new OAuth2Client(this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'));
-      const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'),
-      });
+    const client = new OAuth2Client(this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'));
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: this.configService.get<string>('AUTH_GOOGLE_CLIENT_ID'),
+    });
 
-      const payload = ticket.getPayload();
+    const payload = ticket.getPayload();
 
-      if (!payload) {
-        return null;
-      }
-
-      return {
-        email: payload.email,
-        firstName: payload.given_name,
-        lastName: payload.family_name,
-        picture: payload.picture,
-        googleId: payload.sub,
-        sub: payload.sub,
-      };
-    } catch (error) {
-      console.error('Error validating Google token:', error);
+    if (!payload) {
       return null;
     }
+
+    return {
+      email: payload.email,
+      firstName: payload.given_name,
+      lastName: payload.family_name,
+      picture: payload.picture,
+      googleId: payload.sub,
+      sub: payload.sub,
+    };
   }
 
   async logout(userId: number): Promise<void> {

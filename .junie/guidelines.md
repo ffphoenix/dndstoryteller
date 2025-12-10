@@ -71,14 +71,14 @@ Notes on adding/modifying tests
 - Avoid hitting a real DB in unit tests; mock repository methods instead.
 
 Selective test execution
-- Run a single spec: npm test -- src/app.controller.spec.ts
+- Run a single spec: npm test -- src/app.controller.unit-spec.ts
 - Run by name pattern: npm test -- -t "should be defined"
 
 Verified simple test example (for demonstration)
 - A minimal self-test can be executed with Node without relying on Nest context. This is useful to validate CI plumbing or demonstrate the test process independently of Nest providers.
 - Example commands executed successfully in this repo (from backend directory):
   - node -e "import('node:assert/strict').then(a=>{a.equal(2+3,5);console.log('ok')})"
-- For Jest-based examples, ensure all required providers are mocked; otherwise, Nest DI will throw resolution errors, as seen when running users.service.spec.ts without a mocked repository.
+- For Jest-based examples, ensure all required providers are mocked; otherwise, Nest DI will throw resolution errors, as seen when running users.service.unit-spec.ts without a mocked repository.
 
 Frontend (Vite/React)
 1) Install and run

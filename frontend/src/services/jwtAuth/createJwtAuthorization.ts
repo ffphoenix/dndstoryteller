@@ -60,9 +60,9 @@ const initRefreshOnWindowFocus = (
       tokenManager.getRefreshToken() !== null &&
       calculateTimeToTokenExpire(tokenManager, tokenExpireTime) < refreshTokenBeforeSeconds
     ) {
+      clearTimeout(timeOutId);
       const response = await refreshCallback();
       tokenManager.saveTokens(response.data);
-      clearTimeout(timeOutId);
       initRefreshByInterval(refreshCallback, tokenManager, tokenExpireTime);
     }
   });
