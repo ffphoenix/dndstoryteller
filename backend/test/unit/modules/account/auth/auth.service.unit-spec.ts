@@ -143,7 +143,10 @@ describe('AuthService', () => {
 
     it('should return null on invalid token', async () => {
       const token = 'invalid-token';
-      const mockVerifyIdToken = jest.fn().mockRejectedValue(new Error('Invalid token'));
+      // Simulate successful verification but with no payload returned
+      const mockVerifyIdToken = jest.fn().mockResolvedValue({
+        getPayload: () => undefined,
+      });
       (OAuth2Client as unknown as jest.Mock).mockImplementation(() => ({
         verifyIdToken: mockVerifyIdToken,
       }));
