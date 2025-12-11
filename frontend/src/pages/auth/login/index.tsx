@@ -19,10 +19,8 @@ export default observer(() => {
             <GoogleOAuthProvider clientId={import.meta.env.VITE_AUTH_GOOGLE_CLIENT_ID}>
               <GoogleLogin
                 onSuccess={async (credentialResponse) => {
-                  // @todo fix this type error
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-expect-error
-                  await loginWithGoogle(credentialResponse);
+                  const credential = credentialResponse?.credential ?? "";
+                  await loginWithGoogle({ credential });
                   navigate("/");
                 }}
                 onError={() => {
