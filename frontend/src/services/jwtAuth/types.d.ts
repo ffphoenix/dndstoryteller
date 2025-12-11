@@ -1,3 +1,5 @@
+import type { InternalAxiosRequestConfig } from "axios";
+
 export type JwtTokens = { accessToken: string; refreshToken: string };
 
 export type TokenManager = {
@@ -9,4 +11,8 @@ export type TokenManager = {
   deleteTokens: () => void;
   isRefreshing: () => boolean;
   setRefreshing: (isRefreshing: boolean) => void;
+};
+
+export type CustomInternalAxiosRequestConfig = InternalAxiosRequestConfig & {
+  skipAuthTokenAdding?: boolean;
 };

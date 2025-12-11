@@ -20,9 +20,11 @@ createJwtAuthManager({
   tokenExpireTime: import.meta.env.VITE_JWT_EXPIRE_TIME,
   refreshCallback: () =>
     apiClient.auth.refresh({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      skipAuthTokenAdding: true,
       headers: {
         Authorization: `Bearer ${tokenManager.getRefreshToken()}`,
-        "x-refresh-token": tokenManager.getRefreshToken(),
       },
     }),
   redirectURI: "/auth/login",
