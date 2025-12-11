@@ -1,4 +1,4 @@
-const cyrb64 = (str, seed = 0) => {
+const cyrb64 = (str: string, seed = 0) => {
   let h1 = 0xdeadbeef ^ seed,
     h2 = 0x41c6ce57 ^ seed;
   for (let i = 0, ch; i < str.length; i++) {

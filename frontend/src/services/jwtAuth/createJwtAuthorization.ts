@@ -54,16 +54,17 @@ const initRefreshOnWindowFocus = (
   refreshCallback: () => Promise<AxiosResponse<JwtTokens>>,
   tokenManager: TokenManager,
   tokenExpireTime: number,
+  refreshBeforeExpire = true,
 ) => {
   window.addEventListener("focus", async () => {
     if (
       tokenManager.getRefreshToken() !== null &&
-      calculateTimeToTokenExpire(tokenManager, tokenExpireTime) < refreshTokenBeforeSeconds
+      calculateTimeToTokenExpire(tokenManager, tokenExpireTime) < refreshTokenBeforeSeconds * 1000
     ) {
       clearTimeout(timeOutId);
       const response = await refreshCallback();
       tokenManager.saveTokens(response.data);
-      initRefreshByInterval(refreshCallback, tokenManager, tokenExpireTime);
+      if (refreshBeforeExpire) initRefreshByInterval(refreshCallback, tokenManager, tokenExpireTime);
     }
   });
 };
@@ -89,7 +90,7 @@ export default ({
       }
 
       if (refreshOnWindowFocus && refreshCallback !== undefined) {
-        initRefreshOnWindowFocus(refreshCallback, tokenManager, tokenExpireTime);
+        initRefreshOnWindowFocus(refreshCallback, tokenManager, tokenExpireTime, refreshBeforeExpire);
       }
 
       if (refreshAfterExpire && refreshCallback !== undefined) {
